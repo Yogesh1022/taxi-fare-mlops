@@ -2,28 +2,38 @@ stages:
   clean:
     cmd: python -m src.data.clean
     deps:
-      - data/raw/train.csv
-      - data/raw/test.csv
-      - src/data/clean.py
+    - data/raw/train.csv
+    - data/raw/test.csv
+    - src/data/clean.py
     outs:
-      - data/clean/train_clean.csv
-      - data/clean/test_clean.csv
+    - data/clean/train_clean.csv
+    - data/clean/test_clean.csv
 
   ingest:
     cmd: python -m src.data.ingest
     deps:
-      - data/clean/train_clean.csv
-      - data/clean/test_clean.csv
+    - data/clean/train_clean.csv
+    - data/clean/test_clean.csv
     outs:
-      - data/processed/ingested_train.csv
-      - data/processed/ingested_test.csv
+    - data/processed/ingested_train.csv
+    - data/processed/ingested_test.csv
 
   validate:
     cmd: python src/data/validate_run.py
     deps:
-      - data/raw/train.csv
-      - data/raw/test.csv
-      - src/data/validate_run.py
+    - data/raw/train.csv
+    - data/raw/test.csv
+    - src/data/validate_run.py
     metrics:
-      - mlops/data_quality/validation_metrics.json:
-          cache: false
+    - mlops/data_quality/validation_metrics.json:
+        cache: false
+  train:
+    cmd: python -m pipelines.training_pipeline
+    deps:
+    - data/processed/ingested_train.csv
+    - pipelines/training_pipeline.py
+    outs:
+    - models/model.pkl
+    metrics:
+    - models/metrics.json:
+        cache: false

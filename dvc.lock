@@ -1,0 +1,86 @@
+schema: '2.0'
+stages:
+  clean:
+    cmd: python -m src.data.clean
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: f1aa5e7534cb35769c66a3fbcaa85dbc
+      size: 175260
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 7a73e1bca30675b426264035af19d980
+      size: 1179089
+    - path: src/data/clean.py
+      hash: md5
+      md5: 93d9f4b9a96f142eb165f87a42f859c9
+      size: 7657
+    outs:
+    - path: data/clean/test_clean.csv
+      hash: md5
+      md5: 139779daa2bc8067d14555ff1d999ca0
+      size: 206141
+    - path: data/clean/train_clean.csv
+      hash: md5
+      md5: 3e82d408ccf067312f86ff27de1793ac
+      size: 1199379
+  ingest:
+    cmd: python -m src.data.ingest
+    deps:
+    - path: data/clean/test_clean.csv
+      hash: md5
+      md5: 139779daa2bc8067d14555ff1d999ca0
+      size: 206141
+    - path: data/clean/train_clean.csv
+      hash: md5
+      md5: 3e82d408ccf067312f86ff27de1793ac
+      size: 1199379
+    outs:
+    - path: data/processed/ingested_test.csv
+      hash: md5
+      md5: 7573d6a74f3a1c30c72371866eed5a7e
+      size: 205998
+    - path: data/processed/ingested_train.csv
+      hash: md5
+      md5: f09709065165109e701d67c7574d7a71
+      size: 1199379
+  validate:
+    cmd: python src/data/validate_run.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: f1aa5e7534cb35769c66a3fbcaa85dbc
+      size: 175260
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 7a73e1bca30675b426264035af19d980
+      size: 1179089
+    - path: src/data/validate_run.py
+      hash: md5
+      md5: e5a88a5175dce3d50b5d20522aaf85af
+      size: 3236
+    outs:
+    - path: mlops/data_quality/validation_metrics.json
+      hash: md5
+      md5: abf7f283e4b982235e8ca07c418239da
+      size: 213
+  train:
+    cmd: python -m pipelines.training_pipeline
+    deps:
+    - path: data/processed/ingested_train.csv
+      hash: md5
+      md5: f09709065165109e701d67c7574d7a71
+      size: 1199379
+    - path: pipelines/training_pipeline.py
+      hash: md5
+      md5: 70b27b0c092da4da08b5ff262ebb4e4a
+      size: 3612
+    outs:
+    - path: models/metrics.json
+      hash: md5
+      md5: 23ad2ce13df3690bb9e0094ea344d5f9
+      size: 169
+    - path: models/model.pkl
+      hash: md5
+      md5: 5b42be47dbb4ec5dad5d8d704391414d
+      size: 1193
