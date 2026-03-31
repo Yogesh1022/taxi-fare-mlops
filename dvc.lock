@@ -84,3 +84,35 @@ stages:
       hash: md5
       md5: 83b27df43bf8e8c9c319f44a62dfc477
       size: 2144
+  baseline:
+    cmd: python -m src.models.baseline
+    deps:
+    - path: data/processed/ingested_train.csv
+      hash: md5
+      md5: f09709065165109e701d67c7574d7a71
+      size: 1199379
+    - path: models/preprocessor.pkl
+      hash: md5
+      md5: b848ef9b14ff17deb54fcc6084822ce0
+      size: 5836
+    - path: src/models/baseline.py
+      hash: md5
+      md5: 7e15118319946223bfbb8f16d69dc22d
+      size: 4672
+    - path: src/models/train.py
+      hash: md5
+      md5: 49ad89607d93e5687fc12889ec5c6205
+      size: 11909
+    outs:
+    - path: models/baseline_summary.json
+      hash: md5
+      md5: 94ac19c3828d4051a103d4c33e367309
+      size: 3350
+    - path: models/best_baseline_model.pkl
+      hash: md5
+      md5: 8d01c0a88ab5c3c15e1c485d97b104a4
+      size: 1559310
+    - path: models/leaderboard.json
+      hash: md5
+      md5: 2d58ccd58920bbce655a7acfebdedf2c
+      size: 3034

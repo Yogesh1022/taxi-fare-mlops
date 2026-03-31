@@ -37,3 +37,18 @@ stages:
     metrics:
     - models/metrics.json:
         cache: false
+
+  baseline:
+    cmd: python -m src.models.baseline
+    deps:
+    - data/processed/ingested_train.csv
+    - src/models/baseline.py
+    - src/models/train.py
+    - models/preprocessor.pkl
+    outs:
+    - models/best_baseline_model.pkl
+    metrics:
+    - models/leaderboard.json:
+        cache: false
+    - models/baseline_summary.json:
+        cache: false
