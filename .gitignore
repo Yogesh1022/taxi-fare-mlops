@@ -140,7 +140,7 @@ dmypy.json
 # MLOps specific
 .mlflow/
 mlruns/
-dvc.lock
+
 .dvc/
 
 # IDEs

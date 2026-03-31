@@ -1,19 +1,17 @@
 """Logger setup."""
 
-from loguru import logger
-import sys
+import logging
+from pathlib import Path
 
-# Configure loguru
-logger.remove()
-logger.add(
-    sys.stdout,
-    format="<level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-    level="INFO"
+# Create logs directory if it doesn't exist
+logs_dir = Path("logs")
+logs_dir.mkdir(exist_ok=True)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)-8s | %(name)s:%(funcName)s:%(lineno)d - %(message)s",
+    handlers=[logging.StreamHandler(), logging.FileHandler("logs/app.log")],
 )
-logger.add(
-    "logs/app.log",
-    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
-    level="DEBUG",
-    rotation="1 MB",
-    retention=5
-)
+
+logger = logging.getLogger(__name__)

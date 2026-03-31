@@ -1,0 +1,348 @@
+{
+  "timestamp": "2026-03-31T14:21:58.506040",
+  "status": "FAIL",
+  "validation": {
+    "is_valid": false,
+    "errors": [
+      "Missing required columns: {'total_amount'}",
+      "Column 'passenger_count' should not have nulls but has 55 (3.67%)",
+      "Column 'RatecodeID' should not have nulls but has 55 (3.67%)",
+      "Column 'store_and_fwd_flag' should not have nulls but has 55 (3.67%)",
+      "Column 'congestion_surcharge' should not have nulls but has 55 (3.67%)",
+      "Column 'Airport_fee' should not have nulls but has 55 (3.67%)",
+      "Column 'passenger_count': 35 values below minimum 1.0",
+      "Column 'RatecodeID': 9 values above maximum 5.0",
+      "Column 'extra': 19 values below minimum 0.0",
+      "Column 'tolls_amount': 3 values below minimum 0.0",
+      "Column 'improvement_surcharge': 24 values below minimum 0.0",
+      "Column 'congestion_surcharge': 22 values below minimum 0.0",
+      "Column 'Airport_fee': 5 values below minimum 0.0",
+      "Column 'payment_type': found invalid values {'Wallet', 'unknown', 'UPI'}. Allowed: ['Credit Card', 'Cash', 'other']"
+    ],
+    "warnings": [
+      "Extra columns found (will be ignored): {'id'}",
+      "Column 'passenger_count': 359 outliers detected (24.84%)",
+      "Column 'trip_distance': 190 outliers detected (12.67%)",
+      "Column 'tip_amount': 97 outliers detected (6.47%)"
+    ],
+    "stats": {
+      "n_rows": 1500,
+      "n_columns": 17,
+      "memory_mb": 0.5431184768676758,
+      "missing_values": {
+        "id": 0,
+        "VendorID": 0,
+        "tpep_pickup_datetime": 0,
+        "tpep_dropoff_datetime": 0,
+        "passenger_count": 55,
+        "trip_distance": 0,
+        "RatecodeID": 55,
+        "store_and_fwd_flag": 55,
+        "PULocationID": 0,
+        "DOLocationID": 0,
+        "payment_type": 0,
+        "extra": 0,
+        "tip_amount": 0,
+        "tolls_amount": 0,
+        "improvement_surcharge": 0,
+        "congestion_surcharge": 55,
+        "Airport_fee": 55
+      },
+      "numeric_stats": {
+        "id": {
+          "mean": 749.5,
+          "std": 433.15701541127095,
+          "min": 0.0,
+          "max": 1499.0
+        },
+        "VendorID": {
+          "mean": 0.724,
+          "std": 0.44865524368397103,
+          "min": 0.0,
+          "max": 2.0
+        },
+        "passenger_count": {
+          "mean": 1.3474048442906574,
+          "std": 0.893808639347109,
+          "min": 0.0,
+          "max": 6.0
+        },
+        "trip_distance": {
+          "mean": 3.7745333333333333,
+          "std": 4.89595835913581,
+          "min": 0.0,
+          "max": 45.49
+        },
+        "RatecodeID": {
+          "mean": 1.6871972318339101,
+          "std": 7.715985724365184,
+          "min": 1.0,
+          "max": 99.0
+        },
+        "PULocationID": {
+          "mean": 131.56266666666667,
+          "std": 76.37576564552953,
+          "min": 1.0,
+          "max": 264.0
+        },
+        "DOLocationID": {
+          "mean": 131.78,
+          "std": 76.04418942845372,
+          "min": 1.0,
+          "max": 264.0
+        },
+        "extra": {
+          "mean": 1.9355,
+          "std": 2.0129371642829708,
+          "min": -5.0,
+          "max": 11.75
+        },
+        "tip_amount": {
+          "mean": 6.132380602030103,
+          "std": 4.102918569958434,
+          "min": 0.0010952349222564,
+          "max": 26.711745412418647
+        },
+        "tolls_amount": {
+          "mean": 0.6200733333333334,
+          "std": 2.1875389548702757,
+          "min": -6.55,
+          "max": 29.56
+        },
+        "improvement_surcharge": {
+          "mean": 0.9668666666666667,
+          "std": 0.2528599236393096,
+          "min": -1.0,
+          "max": 1.0
+        },
+        "congestion_surcharge": {
+          "mean": 2.2301038062283736,
+          "std": 0.8903687821145646,
+          "min": -2.5,
+          "max": 2.5
+        },
+        "Airport_fee": {
+          "mean": 0.16470588235294117,
+          "std": 0.531504033283024,
+          "min": -1.75,
+          "max": 1.75
+        }
+      }
+    }
+  },
+  "data_summary": {
+    "shape": {
+      "rows": 1500,
+      "columns": 17
+    },
+    "columns": [
+      "id",
+      "VendorID",
+      "tpep_pickup_datetime",
+      "tpep_dropoff_datetime",
+      "passenger_count",
+      "trip_distance",
+      "RatecodeID",
+      "store_and_fwd_flag",
+      "PULocationID",
+      "DOLocationID",
+      "payment_type",
+      "extra",
+      "tip_amount",
+      "tolls_amount",
+      "improvement_surcharge",
+      "congestion_surcharge",
+      "Airport_fee"
+    ],
+    "dtypes": {
+      "id": "int64",
+      "VendorID": "int64",
+      "tpep_pickup_datetime": "object",
+      "tpep_dropoff_datetime": "object",
+      "passenger_count": "float64",
+      "trip_distance": "float64",
+      "RatecodeID": "float64",
+      "store_and_fwd_flag": "object",
+      "PULocationID": "int64",
+      "DOLocationID": "int64",
+      "payment_type": "object",
+      "extra": "float64",
+      "tip_amount": "float64",
+      "tolls_amount": "float64",
+      "improvement_surcharge": "float64",
+      "congestion_surcharge": "float64",
+      "Airport_fee": "float64"
+    },
+    "missing": {
+      "id": 0,
+      "VendorID": 0,
+      "tpep_pickup_datetime": 0,
+      "tpep_dropoff_datetime": 0,
+      "passenger_count": 55,
+      "trip_distance": 0,
+      "RatecodeID": 55,
+      "store_and_fwd_flag": 55,
+      "PULocationID": 0,
+      "DOLocationID": 0,
+      "payment_type": 0,
+      "extra": 0,
+      "tip_amount": 0,
+      "tolls_amount": 0,
+      "improvement_surcharge": 0,
+      "congestion_surcharge": 55,
+      "Airport_fee": 55
+    },
+    "missing_pct": {
+      "id": 0.0,
+      "VendorID": 0.0,
+      "tpep_pickup_datetime": 0.0,
+      "tpep_dropoff_datetime": 0.0,
+      "passenger_count": 3.6666666666666665,
+      "trip_distance": 0.0,
+      "RatecodeID": 3.6666666666666665,
+      "store_and_fwd_flag": 3.6666666666666665,
+      "PULocationID": 0.0,
+      "DOLocationID": 0.0,
+      "payment_type": 0.0,
+      "extra": 0.0,
+      "tip_amount": 0.0,
+      "tolls_amount": 0.0,
+      "improvement_surcharge": 0.0,
+      "congestion_surcharge": 3.6666666666666665,
+      "Airport_fee": 3.6666666666666665
+    },
+    "duplicates": 0,
+    "numeric_summary": {
+      "id": {
+        "count": 1500,
+        "mean": 749.5,
+        "std": 433.15701541127095,
+        "min": 0.0,
+        "25%": 374.75,
+        "50%": 749.5,
+        "75%": 1124.25,
+        "max": 1499.0
+      },
+      "VendorID": {
+        "count": 1500,
+        "mean": 0.724,
+        "std": 0.44865524368397103,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 1.0,
+        "75%": 1.0,
+        "max": 2.0
+      },
+      "passenger_count": {
+        "count": 1445,
+        "mean": 1.3474048442906574,
+        "std": 0.893808639347109,
+        "min": 0.0,
+        "25%": 1.0,
+        "50%": 1.0,
+        "75%": 1.0,
+        "max": 6.0
+      },
+      "trip_distance": {
+        "count": 1500,
+        "mean": 3.7745333333333333,
+        "std": 4.89595835913581,
+        "min": 0.0,
+        "25%": 1.1375,
+        "50%": 1.88,
+        "75%": 3.9025,
+        "max": 45.49
+      },
+      "RatecodeID": {
+        "count": 1445,
+        "mean": 1.6871972318339101,
+        "std": 7.715985724365184,
+        "min": 1.0,
+        "25%": 1.0,
+        "50%": 1.0,
+        "75%": 1.0,
+        "max": 99.0
+      },
+      "PULocationID": {
+        "count": 1500,
+        "mean": 131.56266666666667,
+        "std": 76.37576564552953,
+        "min": 1.0,
+        "25%": 68.0,
+        "50%": 131.0,
+        "75%": 200.0,
+        "max": 264.0
+      },
+      "DOLocationID": {
+        "count": 1500,
+        "mean": 131.78,
+        "std": 76.04418942845372,
+        "min": 1.0,
+        "25%": 65.0,
+        "50%": 130.0,
+        "75%": 198.0,
+        "max": 264.0
+      },
+      "extra": {
+        "count": 1500,
+        "mean": 1.9355,
+        "std": 2.0129371642829708,
+        "min": -5.0,
+        "25%": 0.0,
+        "50%": 1.0,
+        "75%": 2.5,
+        "max": 11.75
+      },
+      "tip_amount": {
+        "count": 1500,
+        "mean": 6.132380602030103,
+        "std": 4.102918569958434,
+        "min": 0.0010952349222564,
+        "25%": 3.5459849811938033,
+        "50%": 5.2276150533272014,
+        "75%": 7.605166724000319,
+        "max": 26.711745412418647
+      },
+      "tolls_amount": {
+        "count": 1500,
+        "mean": 0.6200733333333334,
+        "std": 2.1875389548702757,
+        "min": -6.55,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 29.56
+      },
+      "improvement_surcharge": {
+        "count": 1500,
+        "mean": 0.9668666666666667,
+        "std": 0.2528599236393096,
+        "min": -1.0,
+        "25%": 1.0,
+        "50%": 1.0,
+        "75%": 1.0,
+        "max": 1.0
+      },
+      "congestion_surcharge": {
+        "count": 1445,
+        "mean": 2.2301038062283736,
+        "std": 0.8903687821145646,
+        "min": -2.5,
+        "25%": 2.5,
+        "50%": 2.5,
+        "75%": 2.5,
+        "max": 2.5
+      },
+      "Airport_fee": {
+        "count": 1445,
+        "mean": 0.16470588235294117,
+        "std": 0.531504033283024,
+        "min": -1.75,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 1.75
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-.PHONY: help setup lint format test train serve clean all
+.PHONY: help setup lint format test train serve clean all dvc-init dvc-reproduce
 
 # Variables
 PYTHON := python3
@@ -17,6 +17,8 @@ help:
 	@echo "  make dashboard   - Start Streamlit dashboard"
 	@echo "  make docker-build- Build Docker images"
 	@echo "  make docker-up   - Start Docker services (compose)"
+	@echo "  make dvc-init    - Initialize DVC"
+	@echo "  make dvc-data    - Run DVC data pipeline (ingest + validate)"
 	@echo "  make clean       - Clean cache and build artifacts"
 	@echo "  make all         - Run setup, lint, test, train"
 
@@ -53,6 +55,17 @@ test-cov:
 	@echo "Running tests with coverage..."
 	pytest tests/ -v --cov=src --cov-report=html --cov-report=term-missing
 	@echo "Coverage report generated in htmlcov/index.html"
+
+dvc-init:
+	@echo "Initializing DVC..."
+	dvc init --no-scm || true
+	@echo "DVC initialized"
+
+dvc-data:
+	@echo "Running DVC data pipeline..."
+	$(PYTHON) -m src.data.ingest
+	$(PYTHON) src/data/validate_run.py
+	@echo "Data pipeline complete!"
 
 train:
 	@echo "Starting training pipeline..."

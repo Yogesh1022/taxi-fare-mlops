@@ -1,0 +1,11 @@
+{
+  "train_valid": false,
+  "test_valid": false,
+  "all_valid": false,
+  "train_rows": 10000,
+  "test_rows": 1500,
+  "train_errors": 15,
+  "test_errors": 14,
+  "train_warnings": 4,
+  "test_warnings": 4
+}

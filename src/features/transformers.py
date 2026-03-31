@@ -1,6 +1,5 @@
 """Feature transformers."""
 
-from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
 
 

@@ -8,6 +8,12 @@ data:
   val_size: 0.1
   random_state: 42
 
+# Data validation
+validation:
+  missing_tolerance: 0.05  # 5% missing data tolerance
+  outlier_iqr_multiplier: 1.5  # IQR multiplier for outlier detection
+  fail_on_error: true  # Fail pipeline if validation errors found
+
 # Feature engineering
 features:
   numerical_features:
@@ -16,16 +22,44 @@ features:
     - extra
     - mta_tax
     - tolls_amount
+    - tip_amount
   temporal_features:
     - pickup_hour
     - pickup_day
     - pickup_month
     - pickup_weekday
+  categorical_features:
+    - VendorID
+    - RatecodeID
+    - payment_type
 
 # Model configuration
 models:
   baseline:
     algorithm: LinearRegression
+  ridge:
+    algorithm: Ridge
+    params:
+      alpha: 1.0
+  lasso:
+    algorithm: Lasso
+    params:
+      alpha: 0.01
+  elasticnet:
+    algorithm: ElasticNet
+    params:
+      alpha: 0.01
+      l1_ratio: 0.5
+  svr:
+    algorithm: SVR
+    params:
+      kernel: rbf
+      C: 100
+  rf:
+    algorithm: RandomForest
+    params:
+      n_estimators: 100
+      max_depth: 10
   xgboost:
     algorithm: XGBRegressor
     params:
@@ -34,6 +68,10 @@ models:
       n_estimators: 100
   lightgbm:
     algorithm: LGBMRegressor
+    params:
+      max_depth: 6
+      learning_rate: 0.1
+      n_estimators: 100
 
 # Training
 training:
@@ -46,6 +84,7 @@ tuning:
   n_trials: 100
   timeout: 3600  # seconds
   random_state: 42
+  top_models: 3
 
 # Evaluation metrics
 evaluation:
@@ -54,3 +93,4 @@ evaluation:
     - rmse
     - mae
     - mape
+  cv_scoring: r2
