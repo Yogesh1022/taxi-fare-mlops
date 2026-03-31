@@ -73,14 +73,14 @@ stages:
       size: 1199379
     - path: pipelines/training_pipeline.py
       hash: md5
-      md5: 70b27b0c092da4da08b5ff262ebb4e4a
-      size: 3612
+      md5: 14aeb51884f44f280258a93566bd0a11
+      size: 5406
     outs:
     - path: models/metrics.json
       hash: md5
-      md5: 23ad2ce13df3690bb9e0094ea344d5f9
-      size: 169
+      md5: 4ed738e6973097582adf739416893677
+      size: 236
     - path: models/model.pkl
       hash: md5
-      md5: 5b42be47dbb4ec5dad5d8d704391414d
-      size: 1193
+      md5: 83b27df43bf8e8c9c319f44a62dfc477
+      size: 2144
