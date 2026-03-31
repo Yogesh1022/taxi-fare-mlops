@@ -1,18 +1,29 @@
-"""DVC pipeline configuration."""
+stages:
+  clean:
+    cmd: python -m src.data.clean
+    deps:
+      - data/raw/train.csv
+      - data/raw/test.csv
+      - src/data/clean.py
+    outs:
+      - data/clean/train_clean.csv
+      - data/clean/test_clean.csv
 
-# TODO: Add DVC pipeline stages
-# stages:
-#   ingest:
-#     cmd: python -m src.data.ingest
-#     deps:
-#       - data/raw/
-#     outs:
-#       - data/interim/
-#   validate:
-#     cmd: python -m src.data.validate
-#     deps:
-#       - data/interim/
-#   featurize:
-#     cmd: python -m src.features.pipeline
-#   train:
-#     cmd: python -m src.models.train
+  ingest:
+    cmd: python -m src.data.ingest
+    deps:
+      - data/clean/train_clean.csv
+      - data/clean/test_clean.csv
+    outs:
+      - data/processed/ingested_train.csv
+      - data/processed/ingested_test.csv
+
+  validate:
+    cmd: python src/data/validate_run.py
+    deps:
+      - data/raw/train.csv
+      - data/raw/test.csv
+      - src/data/validate_run.py
+    metrics:
+      - mlops/data_quality/validation_metrics.json:
+          cache: false
