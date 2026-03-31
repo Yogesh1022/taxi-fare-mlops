@@ -1,0 +1,18 @@
+"""DVC pipeline configuration."""
+
+# TODO: Add DVC pipeline stages
+# stages:
+#   ingest:
+#     cmd: python -m src.data.ingest
+#     deps:
+#       - data/raw/
+#     outs:
+#       - data/interim/
+#   validate:
+#     cmd: python -m src.data.validate
+#     deps:
+#       - data/interim/
+#   featurize:
+#     cmd: python -m src.features.pipeline
+#   train:
+#     cmd: python -m src.models.train

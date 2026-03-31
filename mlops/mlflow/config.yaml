@@ -1,0 +1,6 @@
+"""MLflow configuration."""
+
+# TODO: Configure MLflow
+# - Set tracking URI
+# - Define experiment names
+# - Configure model registry

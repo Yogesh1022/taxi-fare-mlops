@@ -1,0 +1,54 @@
+services:
+  taxifare_mlops:
+    image: apache/airflow:2.9.3-python3.11
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+    command: standalone
+    restart: unless-stopped
+
+  api:
+    profiles: ["api"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: uvicorn src.deployment.api:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ../src:/app/src
+      - ../data:/app/data
+      - mlruns:/app/mlruns
+    depends_on:
+      - taxifare_mlops
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  dashboard:
+    profiles: ["dashboard"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: streamlit run src/deployment/dashboard.py --server.port 8501 --server.address 0.0.0.0
+    volumes:
+      - ../src:/app/src
+      - ../data:/app/data
+    depends_on:
+      - taxifare_mlops
+    restart: unless-stopped
+
+volumes:
+  mlruns:
