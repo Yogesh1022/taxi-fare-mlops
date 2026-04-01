@@ -12,6 +12,7 @@ on:
 
 env:
   PYTHON_VERSION: '3.10'
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   deployment-checks:
