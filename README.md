@@ -8,12 +8,17 @@ Predict the `total_amount` (taxi fare) from NYC taxi trip data using multiple ML
 
 ## 📊 Project Status
 
-**Day 1 - Project Bootstrap (Complete)**
-- ✅ Repository structure initialized  
-- ✅ Environment reproducibility (pyproject.toml, requirements.txt)
-- ✅ Docker containerization
-- ✅ Makefile automation
-- ✅ CI/CD workflow (GitHub Actions)
+**Days Completed: 10/14 (71%)**
+- ✅ Days 1-7: Full training pipeline with MLflow
+- ✅ Days 8-9: Batch predictions & inference API
+- ✅ Day 10: CI/CD pipeline with GitHub Actions
+- 🔄 Days 11-14: Docker, Kubernetes, monitoring (in progress)
+
+### Workflow Status
+
+[![CI Pipeline](https://github.com/{{ORG}}/{{REPO}}/workflows/CI%20Pipeline/badge.svg)](https://github.com/{{ORG}}/{{REPO}}/actions?query=workflow%3A%22CI+Pipeline%22)
+[![Model Validation](https://github.com/{{ORG}}/{{REPO}}/workflows/Model%20Validation/badge.svg)](https://github.com/{{ORG}}/{{REPO}}/actions?query=workflow%3A%22Model+Validation%22)
+[![Deployment Readiness](https://github.com/{{ORG}}/{{REPO}}/workflows/Deployment%20Readiness/badge.svg)](https://github.com/{{ORG}}/{{REPO}}/actions?query=workflow%3A%22Deployment+Readiness%22)
 
 ## 🚀 Quick Start
 
@@ -38,7 +43,42 @@ python -m src.models.train --help
 
 **Expected time:** <15 minutes on fresh machine
 
-## 📁 Project Structure
+## � CI/CD Pipeline
+
+The project uses GitHub Actions for continuous integration and deployment:
+
+### Automated Workflows
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| **CI Pipeline** | Push/PR to main | Run tests, code quality, coverage |
+| **Model Validation** | Daily + model changes | Validate models & batch predictions |
+| **Deployment Ready** | Manual + daily | Pre-deployment verification |
+| **Release** | Manual | Version bump & artifact publishing |
+
+### Running Tests Locally
+
+```bash
+# Run all tests
+pytest tests/ -q
+
+# Run with coverage
+pytest tests/ --cov=src --cov-report=html
+
+# Local CI equivalent
+bash scripts/run_local_ci.sh
+
+# Validate GitHub workflows
+python scripts/validate_workflows.py
+```
+
+### Workflow Status & Results
+
+- **View workflows**: [GitHub Actions](https://github.com/{{ORG}}/{{REPO}}/actions)
+- **Coverage reports**: [Codecov](https://codecov.io/gh/{{ORG}}/{{REPO}})
+- **Documentation**: See [DAY10_CI_CD_PIPELINE.md](DAY10_CI_CD_PIPELINE.md)
+
+## �📁 Project Structure
 
 ```
 mlops-taxi-fare-prediction/
