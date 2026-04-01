@@ -80,12 +80,12 @@ def main():
         
         logger.info(f"Transformed feature shape: {X_train_transformed.shape}")
         
-        # 5. Run hyperparameter tuning (30 trials per model)
+        # 5. Run hyperparameter tuning (20 trials per model - optimized)
         logger.info("Starting hyperparameter tuning...")
         results = tune_top_3_models(
             X_train_transformed, X_val_transformed, X_test_transformed,
             y_train, y_val, y_test,
-            n_trials=30,
+            n_trials=20,
             output_dir=MODEL_DIR
         )
         

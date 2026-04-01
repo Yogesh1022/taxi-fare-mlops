@@ -1,0 +1,7 @@
+{
+	"nodes":[
+		{"id":"94a80ae7df3d0a93","x":-125,"y":-30,"width":250,"height":60,"type":"text","text":""},
+		{"id":"cbb7e7026d3ea605","x":-525,"y":-320,"width":400,"height":400,"type":"file","file":"DATA_CLEANING_GUIDE.md"}
+	],
+	"edges":[]
+}

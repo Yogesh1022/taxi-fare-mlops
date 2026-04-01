@@ -55,7 +55,7 @@ def test_tuner_initialization(train_val_test_split):
     """Test tuner initialization."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=5)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=5, use_mlflow=False)
     
     assert tuner.X_train.shape[0] == 100
     assert tuner.X_val.shape[0] == 50
@@ -69,7 +69,7 @@ def test_svm_tuning(train_val_test_split):
     """Test SVM hyperparameter tuning."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3, use_mlflow=False)
     svm_model, svm_params = tuner.tune_svm()
     
     assert svm_model is not None
@@ -83,7 +83,7 @@ def test_compute_metrics(train_val_test_split):
     """Test metrics computation."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, use_mlflow=False)
     
     y_true = np.array([1, 2, 3, 4, 5])
     y_pred = np.array([1.1, 1.9, 3.2, 3.8, 5.1])
@@ -101,7 +101,7 @@ def test_tune_all(train_val_test_split):
     """Test tuning all models."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3, use_mlflow=False)
     results = tuner.tune_all()
     
     assert len(results) >= 1  # At least SVM
@@ -115,7 +115,7 @@ def test_save_results(train_val_test_split, tmp_path):
     """Test saving tuning results."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3, use_mlflow=False)
     tuner.tune_all()
     tuner.save_results(output_dir=tmp_path)
     
@@ -156,7 +156,8 @@ def test_tune_top_3_models_function(train_val_test_split, tmp_path):
     results = tune_top_3_models(
         X_train, X_val, X_test, y_train, y_val, y_test,
         n_trials=3,
-        output_dir=tmp_path
+        output_dir=tmp_path,
+        use_mlflow=False
     )
     
     assert isinstance(results, dict)
@@ -171,7 +172,7 @@ def test_model_persistence(train_val_test_split, tmp_path):
     """Test that tuned models can be loaded and used."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=3, use_mlflow=False)
     tuner.tune_all()
     tuner.save_results(output_dir=tmp_path)
     
@@ -191,7 +192,7 @@ def test_tuning_improves_or_matches_baseline(train_val_test_split):
     """Test that tuned models achieve reasonable performance."""
     X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
     
-    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=5)
+    tuner = HyperparameterTuner(X_train, X_val, y_train, y_val, X_test, y_test, n_trials=5, use_mlflow=False)
     results = tuner.tune_all()
     
     # Tuned models should have reasonable R² scores
