@@ -116,3 +116,47 @@ stages:
       hash: md5
       md5: 2d58ccd58920bbce655a7acfebdedf2c
       size: 3034
+  tune:
+    cmd: python -m pipelines.tuning_pipeline
+    deps:
+    - path: data/processed/ingested_train.csv
+      hash: md5
+      md5: f09709065165109e701d67c7574d7a71
+      size: 1199379
+    - path: models/preprocessor.pkl
+      hash: md5
+      md5: b848ef9b14ff17deb54fcc6084822ce0
+      size: 5836
+    - path: pipelines/tuning_pipeline.py
+      hash: md5
+      md5: 70c92bb6e1367acf2fa1e22280a55ffc
+      size: 5596
+    - path: src/models/tune.py
+      hash: md5
+      md5: 249802231f714821087bcdca0c3fd5a3
+      size: 15074
+    outs:
+    - path: models/tuned_best_params.json
+      hash: md5
+      md5: 800138312bd20d5fbf54cc52d8d2e99c
+      size: 499
+    - path: models/tuned_lightgbm_model.pkl
+      hash: md5
+      md5: c256dd56985f79194022c4541077b745
+      size: 154653
+    - path: models/tuned_svm_model.pkl
+      hash: md5
+      md5: 4a326ee7fb49b6042d711001e648b4d1
+      size: 1602982
+    - path: models/tuned_xgboost_model.pkl
+      hash: md5
+      md5: 6299a79c5e99decc5a03b228e85509dd
+      size: 2173956
+    - path: models/tuning_comparison.json
+      hash: md5
+      md5: 0d4f6e2e524dd66d0e67ee65fa09da42
+      size: 1514
+    - path: models/tuning_results.json
+      hash: md5
+      md5: ef9576b01adaf8956bf41e868e65d1c9
+      size: 1097

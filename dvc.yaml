@@ -52,3 +52,22 @@ stages:
         cache: false
     - models/baseline_summary.json:
         cache: false
+
+  tune:
+    cmd: python -m pipelines.tuning_pipeline
+    deps:
+    - data/processed/ingested_train.csv
+    - pipelines/tuning_pipeline.py
+    - src/models/tune.py
+    - models/preprocessor.pkl
+    outs:
+    - models/tuned_svm_model.pkl
+    - models/tuned_xgboost_model.pkl
+    - models/tuned_lightgbm_model.pkl
+    metrics:
+    - models/tuned_best_params.json:
+        cache: false
+    - models/tuning_results.json:
+        cache: false
+    - models/tuning_comparison.json:
+        cache: false
