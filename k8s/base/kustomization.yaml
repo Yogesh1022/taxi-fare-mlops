@@ -1,0 +1,78 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- deployment.yaml
+- service.yaml
+- configmap.yaml
+- secret.yaml
+- hpa.yaml
+- pvc.yaml
+- ingress.yaml
+- rbac.yaml
+
+# Namespace for all resources
+namespace: taxi-fare-prod
+
+# Common labels applied to all resources
+commonLabels:
+  app: taxi-fare
+  environment: production
+  managed-by: kustomize
+
+# Common annotations
+commonAnnotations:
+  deployment.date: "2026-04-11"
+  generated.by: "kustomize"
+
+# Image replacement
+images:
+- name: taxi-fare-ml
+  newTag: "latest"
+  newName: "ghcr.io/your-org/taxi-fare-ml"
+
+# Replica override
+replicas:
+- name: taxi-fare-api
+  count: 3
+
+# ConfigMap generation
+configMapGenerator:
+- name: app-config
+  behavior: merge
+  literals:
+  - APP_ENV=production
+  - DEBUG=false
+
+# Patches for production-specific settings
+patches:
+- target:
+    kind: Deployment
+    name: taxi-fare-api
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 3
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/requests/cpu
+      value: 500m
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/requests/memory
+      value: 512Mi
+
+# Variables for templating
+vars:
+- name: MLFLOW_URI
+  objref:
+    kind: ConfigMap
+    name: taxi-fare-config
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.mlflow_uri
+
+# Strategic merge patches
+strategicMergePatches: []
+
+# Kustomize allows you to declaratively manage your Kubernetes configurations
+# This base configuration is used by the overlays for different environments

@@ -1,0 +1,29 @@
+---
+# Namespace for production environment
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: taxi-fare-prod
+  labels:
+    environment: production
+    managed-by: kubernetes
+
+---
+# Namespace for staging environment
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: taxi-fare-staging
+  labels:
+    environment: staging
+    managed-by: kubernetes
+
+---
+# Namespace for development environment
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: taxi-fare-dev
+  labels:
+    environment: development
+    managed-by: kubernetes

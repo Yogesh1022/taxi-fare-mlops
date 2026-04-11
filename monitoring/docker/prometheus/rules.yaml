@@ -1,0 +1,5 @@
+groups:
+  - name: recording_rules
+    rules:
+      - record: instance:up:sum
+        expr: sum by (job) (up)

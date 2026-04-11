@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: taxi-fare-api
+  namespace: taxi-fare-prod
+  labels:
+    app: taxi-fare-api
+spec:
+  type: ClusterIP
+  selector:
+    app: taxi-fare-api
+  ports:
+  - name: http
+    port: 8000
+    targetPort: http
+    protocol: TCP
+  - name: metrics
+    port: 8001
+    targetPort: metrics
+    protocol: TCP
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 3600
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlflow-service
+  namespace: taxi-fare-prod
+  labels:
+    app: mlflow-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mlflow-service
+  ports:
+  - name: mlflow
+    port: 5000
+    targetPort: mlflow
+    protocol: TCP
+
+---
+# Headless service for StatefulSet
+apiVersion: v1
+kind: Service
+metadata:
+  name: taxi-fare-api-headless
+  namespace: taxi-fare-prod
+  labels:
+    app: taxi-fare-api
+spec:
+  clusterIP: None
+  selector:
+    app: taxi-fare-api
+  ports:
+  - name: http
+    port: 8000
+    targetPort: http
+    protocol: TCP

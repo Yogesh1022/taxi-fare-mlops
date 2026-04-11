@@ -1,0 +1,303 @@
+groups:
+# API Service Alert Rules
+- name: taxi_fare_api
+  interval: 30s
+  rules:
+
+  # High Error Rate Alert
+  - alert: HighErrorRate
+    expr: |
+      (sum(rate(http_requests_total{job="taxi-fare-api",status=~"5.."}[5m])) 
+       / sum(rate(http_requests_total{job="taxi-fare-api"}[5m]))) > 0.1
+    for: 5m
+    labels:
+      severity: critical
+      service: taxi-fare-api
+    annotations:
+      summary: "High error rate detected (> 10%)"
+      description: "Error rate is {{ $value | humanizePercentage }} on {{ $labels.instance }}"
+
+  # High Response Latency
+  - alert: HighResponseLatency
+    expr: |
+      histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 5
+    for: 5m
+    labels:
+      severity: warning
+      service: taxi-fare-api
+    annotations:
+      summary: "High response latency detected (> 5s)"
+      description: "P95 latency is {{ $value }}s on {{ $labels.instance }}"
+
+  # Prediction Model Error Rate
+  - alert: HighPredictionErrorRate
+    expr: |
+      (sum(rate(model_prediction_errors_total[5m])) 
+       / sum(rate(model_predictions_total[5m]))) > 0.05
+    for: 10m
+    labels:
+      severity: warning
+      service: taxi-fare-api
+    annotations:
+      summary: "High model prediction error rate (> 5%)"
+      description: "Prediction error rate is {{ $value | humanizePercentage }}"
+
+  # Model Inference Latency Alert
+  - alert: SlowModelInference
+    expr: |
+      histogram_quantile(0.95, sum(rate(model_inference_duration_seconds_bucket[5m])) by (le)) > 2
+    for: 5m
+    labels:
+      severity: warning
+      service: taxi-fare-api
+    annotations:
+      summary: "Slow model inference detected (> 2s)"
+      description: "P95 inference latency is {{ $value }}s"
+
+# Pod & Container Alerts
+- name: kubernetes_pods
+  interval: 30s
+  rules:
+
+  # Pod Crash Loop
+  - alert: PodCrashLooping
+    expr: |
+      rate(kube_pod_container_status_restarts_total{namespace="taxi-fare-prod"}[15m]) > 0.5
+    for: 5m
+    labels:
+      severity: critical
+      component: kubernetes
+    annotations:
+      summary: "Pod {{ $labels.pod }} is crash looping"
+      description: "Pod has restarted {{ $value }} times in the last 15 minutes"
+
+  # Pod Memory Usage High
+  - alert: PodMemoryUsageHigh
+    expr: |
+      (container_memory_usage_bytes{pod=~"taxi-fare.*"} / container_spec_memory_limit_bytes) > 0.9
+    for: 5m
+    labels:
+      severity: warning
+      component: kubernetes
+    annotations:
+      summary: "Pod {{ $labels.pod }} memory usage is high (> 90%)"
+      description: "Memory usage is {{ $value | humanizePercentage }}"
+
+  # Pod CPU Usage High
+  - alert: PodCPUUsageHigh
+    expr: |
+      (sum(rate(container_cpu_usage_seconds_total{pod=~"taxi-fare.*"}[1m])) by (pod) 
+       / on(pod) kube_pod_container_resource_limits{resource="cpu"}) > 0.8
+    for: 5m
+    labels:
+      severity: warning
+      component: kubernetes
+    annotations:
+      summary: "Pod {{ $labels.pod }} CPU usage is high (> 80%)"
+      description: "CPU usage is {{ $value | humanizePercentage }}"
+
+  # Pod Not Ready
+  - alert: PodNotReady
+    expr: |
+      min by (pod)(kube_pod_status_phase{namespace="taxi-fare-prod",phase=~"Pending|Unknown|Failed"}) == 1
+    for: 15m
+    labels:
+      severity: critical
+      component: kubernetes
+    annotations:
+      summary: "Pod {{ $labels.pod }} is not ready"
+      description: "Pod has been in {{ $labels.phase }} state for more than 15 minutes"
+
+# Data Quality Alerts
+- name: data_quality
+  interval: 30s
+  rules:
+
+  # Data Validation failure rate
+  - alert: HighDataValidationFailureRate
+    expr: |
+      (sum(rate(data_validation_failures_total[5m])) 
+       / sum(rate(data_validation_total[5m]))) > 0.1
+    for: 10m
+    labels:
+      severity: warning
+      component: data_quality
+    annotations:
+      summary: "High data validation failure rate (> 10%)"
+      description: "{{ $value | humanizePercentage }} of data validations are failing"
+
+  # Missing required features
+  - alert: MissingRequiredFeatures
+    expr: |
+      data_quality_missing_features_total > 0
+    for: 5m
+    labels:
+      severity: critical
+      component: data_quality
+    annotations:
+      summary: "Missing required features detected"
+      description: "{{ $value }} required features are missing"
+
+  # Data drift detected
+  - alert: DataDriftDetected
+    expr: |
+      data_drift_score > 0.7
+    for: 5m
+    labels:
+      severity: warning
+      component: data_quality
+    annotations:
+      summary: "Data drift detected"
+      description: "Data drift score is {{ $value }}"
+
+# Database & External Service Alerts
+- name: external_services
+  interval: 30s
+  rules:
+
+  # MLflow Service Down
+  - alert: MLflowServiceDown
+    expr: |
+      up{job="mlflow"} == 0
+    for: 5m
+    labels:
+      severity: critical
+      component: external_service
+    annotations:
+      summary: "MLflow service is down"
+      description: "MLflow has been unreachable for more than 5 minutes"
+
+  # Database Connection Issues
+  - alert: DatabaseConnectionIssues
+    expr: |
+      rate(db_connection_errors_total[5m]) > 0.1
+    for: 5m
+    labels:
+      severity: critical
+      component: database
+    annotations:
+      summary: "Database connection issues detected"
+      description: "Database errors: {{ $value }} per second"
+
+  # High API Latency to External Services
+  - alert: ExternalAPILatency
+    expr: |
+      histogram_quantile(0.99, sum(rate(external_api_request_duration_seconds_bucket[5m])) by (le)) > 10
+    for: 5m
+    labels:
+      severity: warning
+      component: external_service
+    annotations:
+      summary: "High external API latency (> 10s)"
+      description: "P99 latency is {{ $value }}s"
+
+# Resource Alerts
+- name: resources
+  interval: 30s
+  rules:
+
+  # Node CPU Pressure
+  - alert: NodeCPUPressure
+    expr: |
+      kube_node_status_condition{condition="CPUPressure",status="true"} == 1
+    for: 5m
+    labels:
+      severity: warning
+      component: node
+    annotations:
+      summary: "Node {{ $labels.node }} has CPU pressure"
+      description: "Node is experiencing CPU pressure"
+
+  # Node Memory Pressure
+  - alert: NodeMemoryPressure
+    expr: |
+      kube_node_status_condition{condition="MemoryPressure",status="true"} == 1
+    for: 5m
+    labels:
+      severity: warning
+      component: node
+    annotations:
+      summary: "Node {{ $labels.node }} has memory pressure"
+      description: "Node is experiencing memory pressure"
+
+  # Persistent Volume Space
+  - alert: PersistentVolumeSpaceLow
+    expr: |
+      (kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes) > 0.85
+    for: 5m
+    labels:
+      severity: warning
+      component: storage
+    annotations:
+      summary: "PV {{ $labels.persistentvolumeclaim }} space is low (> 85%)"
+      description: "Space used: {{ $value | humanizePercentage }}"
+
+# Model & Inference Alerts
+- name: model_monitoring
+  interval: 30s
+  rules:
+
+  # Model Prediction Latency SLO
+  - alert: ModelPredictionLatencySLOBreach
+    expr: |
+      histogram_quantile(0.95, sum(rate(model_inference_duration_seconds_bucket[5m])) by (le)) > 1
+    for: 5m
+    labels:
+      severity: critical
+      component: model
+    annotations:
+      summary: "Model prediction latency SLO breached (> 1s)"
+      description: "P95 latency: {{ $value }}s"
+
+  # Model Accuracy Degradation
+  - alert: ModelAccuracyDegradation
+    expr: |
+      model_accuracy < 0.85
+    for: 60m
+    labels:
+      severity: warning
+      component: model
+    annotations:
+      summary: "Model accuracy has degraded"
+      description: "Current accuracy: {{ $value }}"
+
+  # Insufficient Prediction Volume
+  - alert: InsufficientPredictionVolume
+    expr: |
+      rate(model_predictions_total[5m]) < 1
+    for: 10m
+    labels:
+      severity: warning
+      component: model
+    annotations:
+      summary: "Prediction volume is low"
+      description: "Less than 1 prediction per second"
+
+# Availability Alerts
+- name: availability
+  interval: 30s
+  rules:
+
+  # Service Unavailable
+  - alert: ServiceUnavailable
+    expr: |
+      up{job="taxi-fare-api"} == 0
+    for: 2m
+    labels:
+      severity: critical
+      component: availability
+    annotations:
+      summary: "Taxi Fare API service is unavailable"
+      description: "Service has been down for more than 2 minutes"
+
+  # Low Service Availability
+  - alert: LowServiceAvailability
+    expr: |
+      (1 - avg_over_time(up{job="taxi-fare-api"}[5m])) > 0.05
+    for: 5m
+    labels:
+      severity: warning
+      component: availability
+    annotations:
+      summary: "Low service availability (< 95%)"
+      description: "Service availability: {{ $value | humanizePercentage }}"

@@ -1,0 +1,83 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taxi-fare-ingress
+  namespace: taxi-fare-prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/limit-rps: "20"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - api.taxi-fare.example.com
+    secretName: taxi-fare-tls
+  rules:
+  - host: api.taxi-fare.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: taxi-fare-api
+            port:
+              number: 8000
+      - path: /metrics
+        pathType: Prefix
+        backend:
+          service:
+            name: taxi-fare-api
+            port:
+              number: 8001
+
+---
+# Alternative Ingress for dev/staging
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taxi-fare-ingress-staging
+  namespace: taxi-fare-staging
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: staging-api.taxi-fare.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: taxi-fare-api
+            port:
+              number: 8000
+
+---
+# Alternative Ingress for dev
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taxi-fare-ingress-dev
+  namespace: taxi-fare-dev
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dev-api.taxi-fare.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: taxi-fare-api
+            port:
+              number: 8000

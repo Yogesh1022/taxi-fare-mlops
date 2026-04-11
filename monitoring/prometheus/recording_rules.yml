@@ -1,0 +1,53 @@
+groups:
+# Recording Rules for Performance Optimization
+- name: api_recording_rules
+  interval: 30s
+  rules:
+  
+  # HTTP request latency
+  - record: http_request_latency_seconds:histogram_quantile_95
+    expr: |
+      histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job="taxi-fare-api"}[5m])) by (le, method))
+  
+  - record: http_request_latency_seconds:histogram_quantile_99
+    expr: |
+      histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job="taxi-fare-api"}[5m])) by (le, method))
+  
+  # Request rate
+  - record: http_requests_per_second
+    expr: |
+      sum(rate(http_requests_total{job="taxi-fare-api"}[1m])) by (method, endpoint)
+  
+  # Error rate
+  - record: http_error_rate
+    expr: |
+      sum(rate(http_requests_total{job="taxi-fare-api",status=~"5.."}[5m])) by (method, endpoint)
+    / 
+      sum(rate(http_requests_total{job="taxi-fare-api"}[5m])) by (method, endpoint)
+  
+  # Model inference latency
+  - record: model_inference_latency:p95
+    expr: |
+      histogram_quantile(0.95, sum(rate(model_inference_duration_seconds_bucket[5m])) by (le, model))
+  
+  - record: model_inference_latency:p99
+    expr: |
+      histogram_quantile(0.99, sum(rate(model_inference_duration_seconds_bucket[5m])) by (le, model))
+  
+  # Data quality
+  - record: data_validation_success_rate
+    expr: |
+      sum(rate(data_validation_total{status="success"}[5m])) by (validator)
+    /
+      sum(rate(data_validation_total[5m])) by (validator)
+  
+  # Pod resource utilization
+  - record: pod_cpu_usage_percent
+    expr: |
+      (sum(rate(container_cpu_usage_seconds_total{pod=~"taxi-fare.*"}[1m])) by (pod)
+      / on(pod) kube_pod_container_resource_limits{resource="cpu"}) * 100
+  
+  - record: pod_memory_usage_percent
+    expr: |
+      (container_memory_usage_bytes{pod=~"taxi-fare.*"}
+      / on(pod) kube_pod_container_resource_limits{resource="memory"}) * 100

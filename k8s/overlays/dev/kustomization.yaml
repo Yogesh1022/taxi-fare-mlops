@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Development overlay extends base configuration
+bases:
+- ../base
+
+namespace: taxi-fare-dev
+
+# Development-specific label
+commonLabels:
+  tier: development
+  version: 1.0.0-dev
+
+# Development replicas (minimal)
+replicas:
+- name: taxi-fare-api
+  count: 1
+
+# Development resource limits (minimal)
+patches:
+- target:
+    kind: Deployment
+    name: taxi-fare-api
+  patch: |-
+    - op: replace
+      path: /spec/replicas
+      value: 1
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/requests/cpu
+      value: 250m
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/requests/memory
+      value: 256Mi
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/limits/cpu
+      value: 500m
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/limits/memory
+      value: 512Mi
+
+# Development environment
+configMapGenerator:
+- name: taxi-fare-config
+  behavior: merge
+  literals:
+  - environment=development
+  - log_level=DEBUG
+  - workers=2
+  - enable_metrics=false
+
+# Development image (can use dev tag)
+images:
+- name: taxi-fare-ml
+  newTag: "dev"

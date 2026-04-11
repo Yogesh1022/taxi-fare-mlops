@@ -31,16 +31,16 @@ setup:
 
 lint:
 	@echo "Running linters..."
-	ruff check .
-	black --check src/ tests/ pipelines/
-	isort --check-only src/ tests/ pipelines/
+	$(PYTHON) -m ruff check .
+	$(PYTHON) -m black --check src/ tests/ pipelines/
+	$(PYTHON) -m isort --check-only src/ tests/ pipelines/
 	@echo "Linting complete!"
 
 format:
 	@echo "Formatting code..."
-	black src/ tests/ pipelines/
-	isort src/ tests/ pipelines/
-	ruff check --fix .
+	$(PYTHON) -m black src/ tests/ pipelines/
+	$(PYTHON) -m isort src/ tests/ pipelines/
+	$(PYTHON) -m ruff check --fix .
 	@echo "Formatting complete!"
 
 test:

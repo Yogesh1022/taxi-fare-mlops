@@ -1,0 +1,7 @@
+groups:
+  - name: taxi-fare-alerts
+    interval: 15s
+    rules:
+      - alert: HighPredictionLatency
+        expr: api_request_duration_seconds > 1
+        for: 5m

@@ -1,0 +1,44 @@
+{
+  "dashboard": {
+    "title": "API Performance",
+    "description": "API request metrics and performance",
+    "uid": "api-performance",
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate (RPS)",
+        "targets": [
+          {
+            "expr": "rate(api_requests_total[5m])",
+            "refId": "A"
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "id": 2,
+        "title": "Latency (p95)",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, api_request_duration_seconds)",
+            "refId": "A"
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "id": 3,
+        "title": "Error Rate",
+        "targets": [
+          {
+            "expr": "rate(api_requests_total{status=\"error\"}[5m])",
+            "refId": "A"
+          }
+        ],
+        "type": "timeseries"
+      }
+    ]
+  },
+  "overwrite": true
+}
