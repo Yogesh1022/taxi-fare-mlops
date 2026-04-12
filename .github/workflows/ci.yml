@@ -52,8 +52,6 @@ jobs:
         name: codecov-umbrella
         token: ${{ secrets.GITHUB_TOKEN }}
         fail_ci_if_error: false
-      env:
-        CODECOV_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Archive coverage reports
       if: always()
