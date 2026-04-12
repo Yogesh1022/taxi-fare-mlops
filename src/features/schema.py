@@ -2,81 +2,80 @@
 
 from typing import Dict, List
 
-
 # Original input features (from raw data)
 INPUT_FEATURES = {
-    'temporal': [
-        'tpep_pickup_datetime',
-        'tpep_dropoff_datetime',
+    "temporal": [
+        "tpep_pickup_datetime",
+        "tpep_dropoff_datetime",
     ],
-    'numerical': [
-        'passenger_count',
-        'trip_distance',
-        'extra',
-        'tip_amount',
-        'tolls_amount',
-        'improvement_surcharge',
-        'congestion_surcharge',
-        'Airport_fee',
+    "numerical": [
+        "passenger_count",
+        "trip_distance",
+        "extra",
+        "tip_amount",
+        "tolls_amount",
+        "improvement_surcharge",
+        "congestion_surcharge",
+        "Airport_fee",
     ],
-    'categorical': [
-        'store_and_fwd_flag',
-        'payment_type',
+    "categorical": [
+        "store_and_fwd_flag",
+        "payment_type",
     ],
-    'location': [
-        'RatecodeID',
-        'PULocationID',
-        'DOLocationID',
-        'VendorID',
-    ]
+    "location": [
+        "RatecodeID",
+        "PULocationID",
+        "DOLocationID",
+        "VendorID",
+    ],
 }
 
 # Engineered features (output from pipeline)
 ENGINEERED_FEATURES = {
-    'temporal': [
-        'tpep_pickup_datetime_hour',
-        'tpep_pickup_datetime_day',
-        'tpep_pickup_datetime_weekday',
-        'tpep_pickup_datetime_month',
-        'tpep_pickup_datetime_quarter',
-        'tpep_pickup_datetime_is_weekend',
-        'tpep_dropoff_datetime_hour',
-        'tpep_dropoff_datetime_day',
-        'tpep_dropoff_datetime_weekday',
-        'tpep_dropoff_datetime_month',
-        'tpep_dropoff_datetime_quarter',
-        'tpep_dropoff_datetime_is_weekend',
+    "temporal": [
+        "tpep_pickup_datetime_hour",
+        "tpep_pickup_datetime_day",
+        "tpep_pickup_datetime_weekday",
+        "tpep_pickup_datetime_month",
+        "tpep_pickup_datetime_quarter",
+        "tpep_pickup_datetime_is_weekend",
+        "tpep_dropoff_datetime_hour",
+        "tpep_dropoff_datetime_day",
+        "tpep_dropoff_datetime_weekday",
+        "tpep_dropoff_datetime_month",
+        "tpep_dropoff_datetime_quarter",
+        "tpep_dropoff_datetime_is_weekend",
     ],
-    'derived': [
-        'trip_duration_min',      # Duration in minutes
-        'avg_speed',              # Miles per minute
-        'total_surcharges',       # Sum of all surcharges
-        'has_tolls',              # Binary flag
-        'tip_ratio',              # Tip as % of total (training only)
-        'same_location',          # Same pickup/dropoff zone
-        'location_distance',      # Distance between zones
+    "derived": [
+        "trip_duration_min",  # Duration in minutes
+        "avg_speed",  # Miles per minute
+        "total_surcharges",  # Sum of all surcharges
+        "has_tolls",  # Binary flag
+        "tip_ratio",  # Tip as % of total (training only)
+        "same_location",  # Same pickup/dropoff zone
+        "location_distance",  # Distance between zones
     ],
-    'categorical_encoded': [
+    "categorical_encoded": [
         # One-hot encoded categorical features (exact names depend on categories)
-        'store_and_fwd_flag_Y',
-        'payment_type_Cash',
-        'payment_type_other',
+        "store_and_fwd_flag_Y",
+        "payment_type_Cash",
+        "payment_type_other",
     ],
-    'numerical_scaled': [
+    "numerical_scaled": [
         # Scaled numerical features from original data
-        'passenger_count',
-        'trip_distance',
-        'extra',
-        'tip_amount',
-        'tolls_amount',
-        'improvement_surcharge',
-        'congestion_surcharge',
-        'Airport_fee',
-        'RatecodeID',
-        'PULocationID',
-        'DOLocationID',
-        'VendorID',
-    ]
+        "passenger_count",
+        "trip_distance",
+        "extra",
+        "tip_amount",
+        "tolls_amount",
+        "improvement_surcharge",
+        "congestion_surcharge",
+        "Airport_fee",
+        "RatecodeID",
+        "PULocationID",
+        "DOLocationID",
+        "VendorID",
+    ],
 }
 
 # Feature engineering rules documentation
@@ -142,6 +141,7 @@ StandardScaler on all numerical features:
 - Total pipeline output: ~45 features
 """
 
+
 def get_feature_list() -> List[str]:
     """Get complete list of engineered features."""
     features = []
@@ -153,25 +153,25 @@ def get_feature_list() -> List[str]:
 def validate_feature_schema(X) -> bool:
     """
     Validate that features match expected schema.
-    
+
     Args:
         X: Feature data (DataFrame or array)
-    
+
     Returns:
         True if schema matches, False otherwise
     """
-    if hasattr(X, 'columns'):
+    if hasattr(X, "columns"):
         feature_names = set(X.columns)
     else:
         # If array, can't validate exact features, just check shape
         return X.shape[1] > 0
-    
+
     expected_count = sum(len(v) for v in ENGINEERED_FEATURES.values())
     return len(feature_names) >= expected_count * 0.8  # Allow 20% variance
 
 
 FEATURE_SCHEMA = {
-    'input': INPUT_FEATURES,
-    'engineered': ENGINEERED_FEATURES,
-    'rules': FEATURE_ENGINEERING_RULES,
+    "input": INPUT_FEATURES,
+    "engineered": ENGINEERED_FEATURES,
+    "rules": FEATURE_ENGINEERING_RULES,
 }

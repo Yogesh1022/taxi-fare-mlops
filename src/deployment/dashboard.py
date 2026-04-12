@@ -12,9 +12,11 @@ st.markdown("---")
 st.info("Dashboard coming soon! Single prediction and batch upload features.")
 
 st.subheader("Features")
-st.markdown("""
+st.markdown(
+    """
 - 📊 Real-time fare predictions
 - 📈 Batch CSV processing
 - 🎯 Model confidence metrics
 - 📥 Export results as CSV/Parquet
-""")
+"""
+)

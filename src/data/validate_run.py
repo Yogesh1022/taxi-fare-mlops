@@ -91,7 +91,7 @@ def run_validation_pipeline():
         # Don't exit(1) here so DVC pipeline continues
         # In production, these metrics would trigger alerts
         return False
-    
+
     return True
 
 

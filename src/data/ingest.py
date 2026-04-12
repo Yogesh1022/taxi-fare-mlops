@@ -31,7 +31,7 @@ def ingest_data(input_file: str) -> Path:
     # Try clean data first, fall back to raw
     clean_path = CLEAN_DATA_DIR / f"*{input_file.replace('.csv', '')}_clean.csv"
     raw_path = RAW_DATA_DIR / input_file
-    
+
     # Use clean data if it exists
     input_paths = list(CLEAN_DATA_DIR.glob(f"*{input_file.replace('.csv', '')}_clean.csv"))
     if input_paths:
@@ -40,7 +40,7 @@ def ingest_data(input_file: str) -> Path:
     else:
         input_path = raw_path
         logger.info(f"Clean data not found, using raw data: {input_path}")
-    
+
     if not input_path.exists():
         raise FileNotFoundError(f"Data file not found: {input_path}")
 
