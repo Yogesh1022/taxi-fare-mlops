@@ -23,12 +23,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0
       with:
         fetch-depth: 0
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
@@ -51,7 +51,7 @@ jobs:
         git log --oneline -20 >> release_notes.md || echo "- Initial release" >> release_notes.md
 
     - name: Archive release notes
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-notes
         path: release_notes.md
@@ -68,10 +68,10 @@ jobs:
     needs: create-release
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
@@ -81,7 +81,7 @@ jobs:
         python -m build
 
     - name: Archive build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python-distributions
         path: dist/

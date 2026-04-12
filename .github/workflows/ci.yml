@@ -24,12 +24,12 @@ jobs:
         python-version: ["3.10"]
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0.1.0
       with:
         fetch-depth: 0
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
@@ -45,7 +45,7 @@ jobs:
         pytest tests/unit/ -v --cov=src --cov-report=xml --cov-report=html --tb=short
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         flags: unittests
@@ -55,7 +55,7 @@ jobs:
 
     - name: Archive coverage reports
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report-${{ matrix.python-version }}
         path: htmlcov/
@@ -67,10 +67,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0.1.0
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
         cache: 'pip'
@@ -104,10 +104,10 @@ jobs:
     needs: unit-tests
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0.1.0
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
         cache: 'pip'
@@ -130,10 +130,10 @@ jobs:
     name: Security Checks
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0.1.0
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: "3.10"
 
@@ -153,7 +153,7 @@ jobs:
 
     - name: Archive security reports
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-reports
         path: bandit-report.json
@@ -168,7 +168,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4.1.0.1.0
 
     - name: Get workflow status
       id: status
@@ -185,7 +185,7 @@ jobs:
 
     - name: Create workflow status comment
       if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7
+      uses: actions/github-script@v7.0.1.0.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -217,13 +217,13 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.0.1.0
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Build Docker image
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       with:
         context: .
         file: ./docker/Dockerfile
