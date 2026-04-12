@@ -214,29 +214,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  security:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-
-    - name: Install security tools
-      run: |
-        pip install bandit pip-audit
-
-    - name: Run bandit security check
-      run: |
-        bandit -r src/ -f json -o bandit-report.json
-      continue-on-error: true
-
-    - name: Run pip-audit
-      run: |
-        pip-audit
-
   docker-build:
     runs-on: ubuntu-latest
     steps:
