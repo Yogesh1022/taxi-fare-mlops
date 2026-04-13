@@ -19,6 +19,8 @@ jobs:
   deployment-checks:
     name: Pre-Deployment Validation
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     
     steps:
     - uses: actions/checkout@v4
@@ -171,6 +173,8 @@ jobs:
   code-coverage:
     name: Code Coverage Analysis
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     
     steps:
     - uses: actions/checkout@v4

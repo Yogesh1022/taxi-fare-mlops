@@ -20,6 +20,8 @@ jobs:
   validate-models:
     name: Validate Registered Models
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     
     steps:
     - uses: actions/checkout@v4
@@ -64,6 +66,8 @@ jobs:
     name: Test Batch Prediction Pipeline
     runs-on: ubuntu-latest
     needs: validate-models
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     
     steps:
     - uses: actions/checkout@v4
@@ -96,6 +100,8 @@ jobs:
     name: Validate API Endpoints
     runs-on: ubuntu-latest
     needs: validate-models
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     
     steps:
     - uses: actions/checkout@v4
@@ -128,6 +134,8 @@ jobs:
     name: Check Model Performance
     runs-on: ubuntu-latest
     needs: validate-models
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     
     steps:
     - uses: actions/checkout@v4
