@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data.quality import DataQualityReport
-from src.data.validate import validate_data_file
-from src.utils.config import RAW_DATA_DIR
-from src.utils.logger import logger
+from data.quality import DataQualityReport
+from data.validate import validate_data_file
+from utils.config import RAW_DATA_DIR
+from utils.logger import logger
 
 
 def run_validation_pipeline():

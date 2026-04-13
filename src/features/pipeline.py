@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.pipeline import Pipeline
 
-from src.features.transformers import (
+from features.transformers import (
     CategoricalEncoder,
     DatetimeFeatureExtractor,
     FareComponentAggregator,
@@ -16,7 +16,7 @@ from src.features.transformers import (
     SpeedCalculator,
     TripDurationCalculator,
 )
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 def build_feature_pipeline() -> Pipeline:

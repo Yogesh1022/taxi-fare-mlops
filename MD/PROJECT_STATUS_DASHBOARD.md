@@ -364,13 +364,13 @@ MD/ folder contains:
 ```bash
 # Setup
 pip install -r requirements.txt
-python -m src.data  # Run data pipeline
+python -m data  # Run data pipeline
 
 # Testing
 pytest tests/ -v
 
 # Training
-python -m src.models.train
+python -m models.train
 
 # Serving
 uvicorn src.deployment.api:app --reload

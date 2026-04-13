@@ -9,7 +9,7 @@ from flask import Flask, request, jsonify
 from prometheus_client import generate_latest
 import time
 
-from src.monitoring import (
+from monitoring import (
     setup_monitoring,
     track_latency,
     track_request,
@@ -169,7 +169,7 @@ def batch_predict():
 @app.route("/metrics", methods=["GET"])
 def metrics():
     """Prometheus metrics endpoint."""
-    from src.monitoring import get_metrics_registry
+    from monitoring import get_metrics_registry
     registry = get_metrics_registry()
     return generate_latest(registry.registry), 200
 

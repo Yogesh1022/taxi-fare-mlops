@@ -7,8 +7,8 @@ from typing import Any, Dict, List
 
 import mlflow
 
-from src.utils.config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MODEL_DIR
-from src.utils.logger import logger
+from utils.config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MODEL_DIR
+from utils.logger import logger
 
 
 class ModelRegistry:

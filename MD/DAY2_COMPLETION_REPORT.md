@@ -51,19 +51,19 @@ Columns validated:
     - Removes duplicates
     - Outputs to `data/processed/`
   - Proper logging at all stages
-  - Supports running as `python -m src.data.ingest`
+  - Supports running as `python -m data.ingest`
 
 ### ✅ DVC Pipeline Configuration
 - Updated `dvc.yaml` with two stages:
   - **Stage 1 (ingest)**: 
     - Input: data/raw/train.csv, data/raw/test.csv
     - Output: data/processed/ingested_*.csv
-    - Command: `python -m src.data.ingest`
+    - Command: `python -m data.ingest`
   - **Stage 2 (validate)**:
     - Input: data/raw/*.csv
     - Output: mlops/data_quality/validation_report.json
     - Metrics: mlops/data_quality/validation_metrics.json
-    - Command: `python src/data/validate_run.py`
+    - Command: `python -m data.validate_run`
 
 ### ✅ DVC Setup Instructions
 - Makefile added `make dvc-init` command to initialize DVC

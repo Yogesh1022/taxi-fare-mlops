@@ -56,7 +56,7 @@ docker-compose -f docker/docker-compose.yml up -d
 
 ```python
 from flask import Flask
-from src.monitoring import setup_monitoring, track_latency
+from monitoring import setup_monitoring, track_latency
 
 app = Flask(__name__)
 tracing, logger = setup_monitoring(app)
@@ -148,7 +148,7 @@ curl http://localhost:5000/metrics | head -20
 For each of your services, do:
 
 - [ ] Install requirements: `pip install -r requirements-monitoring.txt`
-- [ ] Add import: `from src.monitoring import setup_monitoring, track_latency`
+- [ ] Add import: `from monitoring import setup_monitoring, track_latency`
 - [ ] Setup monitoring: `setup_monitoring(app, service_name="my-service")`
 - [ ] Add decorators to key functions: `@track_latency("operation_name")`
 - [ ] Expose metrics: Add `/metrics` endpoint
@@ -159,7 +159,7 @@ For each of your services, do:
 
 ```python
 from flask import Flask, request
-from src.monitoring import (
+from monitoring import (
     setup_monitoring, 
     track_request, 
     track_latency,
@@ -186,7 +186,7 @@ def run_prediction(data):
 
 @app.route("/metrics")
 def metrics():
-    from src.monitoring import get_metrics_registry
+    from monitoring import get_metrics_registry
     from prometheus_client import generate_latest
     registry = get_metrics_registry()
     return generate_latest(registry.registry)

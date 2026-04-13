@@ -1,6 +1,7 @@
 """FastAPI inference server for production model serving."""
 
 import json
+from contextlib import asynccontextmanager
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -13,9 +14,9 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from src.deployment.batch_predictions import BatchPredictor, PredictionMonitor
-from src.utils.config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MODEL_DIR
-from src.utils.logger import logger
+from deployment.batch_predictions import BatchPredictor, PredictionMonitor
+from utils.config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MODEL_DIR
+from utils.logger import logger
 
 
 # Pydantic models for request/response
@@ -71,13 +72,6 @@ class ErrorResponse(BaseModel):
     details: Optional[str] = None
 
 
-# Initialize FastAPI app
-app = FastAPI(
-    title="Taxi Fare Prediction API",
-    description="Production inference API for taxi fare prediction model",
-    version="1.0.0",
-)
-
 # Global predictor and monitor
 predictor: Optional[BatchPredictor] = None
 monitor: Optional[PredictionMonitor] = None
@@ -85,9 +79,9 @@ request_count = 0
 prediction_count = 0
 
 
-@app.on_event("startup")
-async def startup_event():
-    """Initialize model on startup."""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Initialize and cleanup resources using FastAPI lifespan."""
     global predictor, monitor
 
     logger.info("[API] Starting inference server...")
@@ -115,13 +109,20 @@ async def startup_event():
         logger.error(f"[API] Error during startup: {e}")
         raise
 
+    yield
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Cleanup on shutdown."""
     logger.info("[API] Shutting down inference server...")
     logger.info(f"[API] Total requests: {request_count}")
     logger.info(f"[API] Total predictions: {prediction_count}")
+
+
+# Initialize FastAPI app
+app = FastAPI(
+    title="Taxi Fare Prediction API",
+    description="Production inference API for taxi fare prediction model",
+    version="1.0.0",
+    lifespan=lifespan,
+)
 
 
 @app.get("/health", response_model=HealthResponse)
@@ -386,7 +387,7 @@ def run_server(host: str = "127.0.0.1", port: int = 8000, reload: bool = True):
     logger.info(f"[API] Starting server on {host}:{port}")
 
     uvicorn.run(
-        "src.deployment.inference_api:app", host=host, port=port, reload=reload, log_level="info"
+        "deployment.inference_api:app", host=host, port=port, reload=reload, log_level="info"
     )
 
 

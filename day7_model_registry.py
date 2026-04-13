@@ -8,9 +8,9 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.deployment.model_registry import ModelRegistry, setup_production_models
-from src.utils.logger import logger
-from src.utils.config import MODEL_DIR
+from deployment.model_registry import ModelRegistry, setup_production_models
+from utils.logger import logger
+from utils.config import MODEL_DIR
 
 
 def main():

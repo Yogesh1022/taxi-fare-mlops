@@ -157,7 +157,7 @@ kubectl port-forward -n taxi-fare-prod svc/jaeger-query 16686:16686
 ### Application Instrumentation
 
 ```python
-from src.monitoring import setup_monitoring, track_latency, track_request
+from monitoring import setup_monitoring, track_latency, track_request
 
 # Setup
 app = Flask(__name__)

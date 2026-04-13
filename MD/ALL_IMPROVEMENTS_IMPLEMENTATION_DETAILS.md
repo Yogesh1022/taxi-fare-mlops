@@ -405,7 +405,7 @@ class EnhancedAPIDocumentation:
 
 ### 1. Ensemble Models
 ```python
-from src.models.ensemble import EnsembleModelTrainer
+from models.ensemble import EnsembleModelTrainer
 
 trainer = EnsembleModelTrainer()
 models = trainer.build_base_models(X_train, y_train)
@@ -415,7 +415,7 @@ score = trainer.evaluate(X_test, y_test)
 
 ### 2. Bayesian Tuning
 ```python
-from src.models.bayesian_tuning import BayesianHyperparameterTuner
+from models.bayesian_tuning import BayesianHyperparameterTuner
 
 tuner = BayesianHyperparameterTuner(n_trials=100)
 best_model, best_score = tuner.tune_model(X_train, y_train, X_val, y_val)
@@ -423,7 +423,7 @@ best_model, best_score = tuner.tune_model(X_train, y_train, X_val, y_val)
 
 ### 3. Feature Selection
 ```python
-from src.features.feature_selection import FeatureSelector
+from features.feature_selection import FeatureSelector
 
 selector = FeatureSelector()
 important_features = selector.select_shap(X, y, model)
@@ -432,7 +432,7 @@ X_selected = X[important_features]
 
 ### 4. Anomaly Detection
 ```python
-from src.deployment.drift_detection import DriftDetector
+from deployment.drift_detection import DriftDetector
 
 detector = DriftDetector()
 detector.fit(X_ref)
@@ -442,7 +442,7 @@ drift_report = detector.detect_drift(X_new, X_ref)
 
 ### 5. A/B Testing
 ```python
-from src.deployment.ab_testing import ABTester
+from deployment.ab_testing import ABTester
 
 tester = ABTester()
 result = tester.t_test(model1_predictions, model2_predictions)
@@ -451,7 +451,7 @@ effect_size = tester.calculate_effect_size(model1_predictions, model2_prediction
 
 ### 6. SHAP Explainability
 ```python
-from src.models.explainability import SHAPExplainer
+from models.explainability import SHAPExplainer
 
 explainer = SHAPExplainer(model)
 explainer.fit(X, feature_names)
@@ -460,7 +460,7 @@ explanation = explainer.explain_prediction(X)
 
 ### 7. Grafana Integration
 ```python
-from src.deployment.grafana_integration import GrafanaIntegration
+from deployment.grafana_integration import GrafanaIntegration
 
 grafana = GrafanaIntegration()
 dashboards = grafana.get_dashboard_config()
@@ -468,7 +468,7 @@ dashboards = grafana.get_dashboard_config()
 
 ### 8. Model Optimization
 ```python
-from src.deployment.optimization import ModelOptimizer
+from deployment.optimization import ModelOptimizer
 
 optimizer = ModelOptimizer(model)
 quantized = optimizer.quantize_model(X_sample)
@@ -477,7 +477,7 @@ onnx_path = optimizer.export_to_onnx(X_sample)
 
 ### 9. Data Quality Framework
 ```python
-from src.data.quality_framework import DataQualityValidator
+from data.quality_framework import DataQualityValidator
 
 validator = DataQualityValidator()
 report = validator.validate(df)
@@ -486,7 +486,7 @@ score = validator.get_quality_score(df)
 
 ### 10. Enhanced API Docs
 ```python
-from src.deployment.enhanced_api_docs import EnhancedAPIDocumentation
+from deployment.enhanced_api_docs import EnhancedAPIDocumentation
 
 docs = EnhancedAPIDocumentation()
 schema = docs.get_openapi_schema()

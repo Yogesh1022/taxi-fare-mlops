@@ -14,6 +14,7 @@ Date: 2026-04-08
 
 import json
 import logging
+import tempfile
 import time
 from datetime import datetime
 from pathlib import Path
@@ -87,7 +88,15 @@ class ModelOptimizer:
         logger.info(f"[OPTIMIZE] Original model size: {original_size:.2f} MB")
 
         # Clone model for quantization
-        quantized_model = joblib.load(joblib.dump(self.model, "/tmp/model_temp.pkl")[0])
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".pkl")
+        temp_path = Path(temp_file.name)
+        temp_file.close()
+
+        try:
+            joblib.dump(self.model, temp_path)
+            quantized_model = joblib.load(temp_path)
+        finally:
+            temp_path.unlink(missing_ok=True)
 
         # For tree models, simulate quantization impact
         if hasattr(quantized_model, "get_booster"):  # XGBoost

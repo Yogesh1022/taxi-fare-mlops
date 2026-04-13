@@ -7,7 +7,7 @@ from typing import Any
 
 import pandas as pd
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 class DataQualityReport:

@@ -15,7 +15,7 @@ def test_ensemble_models():
     """Test Ensemble Models improvement"""
     print("\n✓ Testing Ensemble Models...")
     try:
-        from src.models.ensemble import EnsembleModels
+        from models.ensemble import EnsembleModels
         from sklearn.datasets import make_regression
         from sklearn.model_selection import train_test_split
         
@@ -36,7 +36,7 @@ def test_bayesian_tuning():
     """Test Bayesian Hyperparameter Tuning improvement"""
     print("\n✓ Testing Bayesian Tuning...")
     try:
-        from src.models.bayesian_tuning import BayesianTuning
+        from models.bayesian_tuning import BayesianTuning
         from sklearn.datasets import make_regression
         from sklearn.model_selection import train_test_split
         
@@ -56,7 +56,7 @@ def test_feature_selection():
     """Test Advanced Feature Selection improvement"""
     print("\n✓ Testing Feature Selection...")
     try:
-        from src.features.feature_selection import FeatureSelector
+        from features.feature_selection import FeatureSelector
         from sklearn.datasets import make_regression
         
         X, y = make_regression(n_samples=100, n_features=20, random_state=42)
@@ -74,7 +74,7 @@ def test_anomaly_detection():
     """Test Anomaly & Outlier Detection improvement"""
     print("\n✓ Testing Anomaly Detection...")
     try:
-        from src.deployment.drift_detection import AnomalyDetector
+        from deployment.drift_detection import AnomalyDetector
         import numpy as np
         
         X = np.random.randn(100, 10)
@@ -92,7 +92,7 @@ def test_ab_testing():
     """Test A/B Testing Framework improvement"""
     print("\n✓ Testing A/B Testing Framework...")
     try:
-        from src.deployment.ab_testing import ABTester
+        from deployment.ab_testing import ABTester
         import numpy as np
         
         # Create sample A/B test data
@@ -112,7 +112,7 @@ def test_shap_explainability():
     """Test SHAP Model Explainability improvement"""
     print("\n✓ Testing SHAP Explainability...")
     try:
-        from src.models.explainability import SHAPExplainer
+        from models.explainability import SHAPExplainer
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.datasets import make_regression
         
@@ -134,7 +134,7 @@ def test_grafana_integration():
     """Test Grafana Integration improvement"""
     print("\n✓ Testing Grafana Integration...")
     try:
-        from src.deployment.grafana_integration import GrafanaIntegration
+        from deployment.grafana_integration import GrafanaIntegration
         
         grafana = GrafanaIntegration()
         dashboards = grafana.get_dashboard_config()
@@ -149,7 +149,7 @@ def test_model_optimization():
     """Test Model Optimization improvement"""
     print("\n✓ Testing Model Optimization...")
     try:
-        from src.deployment.optimization import ModelOptimizer
+        from deployment.optimization import ModelOptimizer
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.datasets import make_regression
         
@@ -171,7 +171,7 @@ def test_data_quality_framework():
     """Test Great Expectations Data Quality improvement"""
     print("\n✓ Testing Data Quality Framework...")
     try:
-        from src.data.quality_framework import DataQualityValidator
+        from data.quality_framework import DataQualityValidator
         import pandas as pd
         
         df = pd.DataFrame({
@@ -192,7 +192,7 @@ def test_enhanced_api_docs():
     """Test Enhanced API Documentation improvement"""
     print("\n✓ Testing Enhanced API Docs...")
     try:
-        from src.deployment.enhanced_api_docs import EnhancedAPIDocumentation
+        from deployment.enhanced_api_docs import EnhancedAPIDocumentation
         
         docs = EnhancedAPIDocumentation()
         schema = docs.get_openapi_schema()

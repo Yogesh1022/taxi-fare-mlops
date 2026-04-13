@@ -467,7 +467,7 @@ END
 **Solution:**
 - Run save_results() to create artifacts:
   ```python
-  from src.models.tune import tune_top_3_models
+  from models.tune import tune_top_3_models
   results = tune_top_3_models(..., use_mlflow=True)
   ```
 
@@ -500,7 +500,7 @@ mlflow ui
 
 ### Running Tuning with MLflow
 ```python
-from src.models.tune import tune_top_3_models
+from models.tune import tune_top_3_models
 
 # This automatically logs to MLflow
 results = tune_top_3_models(

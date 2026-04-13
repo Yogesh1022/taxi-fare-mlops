@@ -322,7 +322,7 @@ python day7_model_registry.py
 ### Check Registry Status
 
 ```python
-from src.deployment.model_registry import ModelRegistry
+from deployment.model_registry import ModelRegistry
 
 registry = ModelRegistry(use_mlflow=True)
 

@@ -7,8 +7,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.deployment.batch_predictions import BatchPredictor, PredictionMonitor
-from src.utils.config import MODEL_DIR
+from deployment.batch_predictions import BatchPredictor, PredictionMonitor
+from utils.config import MODEL_DIR
 import numpy as np
 import pandas as pd
 

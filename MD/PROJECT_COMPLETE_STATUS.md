@@ -62,7 +62,7 @@ This is a production-grade MLOps system converting a research notebook into a fu
 **Acceptance Criteria**: ✅ ALL MET
 - New machine setup in <15 minutes ✅
 - `make setup` executes successfully ✅
-- `python -m src.models.train` runs without errors ✅
+- `python -m models.train` runs without errors ✅
 - Docker builds without issues ✅
 
 **Test Status**: 5/5 tests passing
@@ -853,8 +853,8 @@ make format            # Auto-format code
 
 # Training & Evaluation
 make train             # Train all models
-python -m src.models.tune  # Bayesian tuning (20 trials)
-python -m src.models.evaluate  # Evaluate all models
+python -m models.tune  # Bayesian tuning (20 trials)
+python -m models.evaluate  # Evaluate all models
 
 # Deployment & Service
 make serve             # Start FastAPI server (http://localhost:8000)

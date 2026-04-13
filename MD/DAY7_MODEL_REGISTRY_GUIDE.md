@@ -167,7 +167,7 @@ python day7_model_registry.py
 ### Option 2: Manual Registry Operations
 
 ```python
-from src.deployment.model_registry import ModelRegistry
+from deployment.model_registry import ModelRegistry
 
 registry = ModelRegistry(use_mlflow=True)
 
@@ -308,7 +308,7 @@ for version in model.latest_versions:
 ### Method 3: Registry Manager
 
 ```python
-from src.deployment.model_registry import ModelRegistry
+from deployment.model_registry import ModelRegistry
 
 registry = ModelRegistry(use_mlflow=True)
 prod_model = registry.get_production_model("taxi-fare-xgboost")

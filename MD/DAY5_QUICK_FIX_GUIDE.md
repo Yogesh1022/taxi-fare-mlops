@@ -315,7 +315,7 @@ After making all 4 fixes, verify:
 □ Python -m pytest tests/unit/test_tuning.py -v
   Result: All tuning tests pass ✅
 
-□ python -m src.models.baseline  (Day 4 still works)
+□ python -m models.baseline  (Day 4 still works)
   Result: Baseline training completes in ~1 minute ✅
 
 □ python -m pipelines.tuning_pipeline  (Day 5 with fixes)

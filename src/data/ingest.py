@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.utils.config import CLEAN_DATA_DIR, PROCESSED_DATA_DIR, RAW_DATA_DIR
-from src.utils.logger import logger
+from utils.config import CLEAN_DATA_DIR, PROCESSED_DATA_DIR, RAW_DATA_DIR
+from utils.logger import logger
 
 
 def load_raw_data(path: Path) -> pd.DataFrame:

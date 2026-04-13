@@ -11,7 +11,7 @@ cd "E:\TaxiFare MLOps"
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e ".[dev]"
-python -m src.models.train --help  # Verify
+python -m models.train --help  # Verify
 ```
 
 ---
@@ -21,8 +21,8 @@ python -m src.models.train --help  # Verify
 ### **DAY 1: Data Ingestion & Validation**
 ```bash
 # Run
-python -m src.data.ingest
-python src/data/validate_run.py
+python -m data.ingest
+python -m data.validate_run
 
 # Test
 pytest tests/unit/test_data.py -v
@@ -31,7 +31,7 @@ pytest tests/unit/test_data.py -v
 ### **DAY 2: Feature Engineering**
 ```bash
 # Run
-python -c "from src.features.pipeline import FeaturePipeline; p = FeaturePipeline()"
+python -c "from features.pipeline import FeaturePipeline; p = FeaturePipeline()"
 
 # Test
 pytest tests/unit/test_features.py -v
@@ -40,7 +40,7 @@ pytest tests/unit/test_features.py -v
 ### **DAY 3: Baseline Models**
 ```bash
 # Run
-python -c "from src.models.train import train_baseline_models; train_baseline_models(X, y)"
+python -c "from models.train import train_baseline_models; train_baseline_models(X, y)"
 
 # Test
 pytest tests/unit/test_models.py -v -k baseline
@@ -58,7 +58,7 @@ pytest tests/unit/test_models.py -v -k tree
 ### **DAY 5: Hyperparameter Tuning**
 ```bash
 # Run
-python -c "from src.models.tune import optimize_hyperparameters; optimize_hyperparameters(n_trials=50)"
+python -c "from models.tune import optimize_hyperparameters; optimize_hyperparameters(n_trials=50)"
 
 # Test
 pytest tests/integration/test_pipeline.py::test_hyperparameter_tuning -v
@@ -70,7 +70,7 @@ pytest tests/integration/test_pipeline.py::test_hyperparameter_tuning -v
 mlflow server --host 0.0.0.0 --port 5000
 
 # Terminal 2 - Run training
-python -c "from src.models.train import train_with_mlflow; train_with_mlflow()"
+python -c "from models.train import train_with_mlflow; train_with_mlflow()"
 
 # View: http://localhost:5000
 ```
@@ -78,8 +78,8 @@ python -c "from src.models.train import train_with_mlflow; train_with_mlflow()"
 ### **DAY 7: Model Registry**
 ```bash
 # Run
-python -c "from src.models.registry import register_model; register_model(run_id='<id>')"
-python -c "from src.models.registry import transition_model_stage; transition_model_stage()"
+python -c "from models.registry import register_model; register_model(run_id='<id>')"
+python -c "from models.registry import transition_model_stage; transition_model_stage()"
 
 # Test
 pytest tests/unit/test_models.py -v -k registry
@@ -91,7 +91,7 @@ pytest tests/unit/test_models.py -v -k registry
 uvicorn src.deployment.api:app --reload --port 8000
 
 # Terminal 2 - Test
-python -c "from src.models.predict import batch_predict; batch_predict(test_data)"
+python -c "from models.predict import batch_predict; batch_predict(test_data)"
 curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"trip_distance": 3.5}'
 
 # Test
@@ -161,23 +161,23 @@ pytest tests/unit/test_ab_testing.py -v
 
 ```bash
 # 1. SHAP Explainability
-python -c "from src.models.explainability import ExplainabilityAnalyzer; analyzer = ExplainabilityAnalyzer(model)"
+python -c "from models.explainability import ExplainabilityAnalyzer; analyzer = ExplainabilityAnalyzer(model)"
 pytest tests/unit/test_explainability.py -v
 
 # 2. Grafana Monitoring
-python -c "from src.deployment.grafana_integration import create_monitoring_setup; create_monitoring_setup()"
+python -c "from deployment.grafana_integration import create_monitoring_setup; create_monitoring_setup()"
 docker-compose -f docker/docker-compose.yml up -d  # If using Docker
 
 # 3. Model Optimization
-python -c "from src.deployment.optimization import ModelOptimizer; opt = ModelOptimizer(model)"
+python -c "from deployment.optimization import ModelOptimizer; opt = ModelOptimizer(model)"
 pytest tests/unit/test_optimization.py -v
 
 # 4. Great Expectations
-python -c "from src.data.quality_framework import validate_taxi_dataset; validate_taxi_dataset(df)"
+python -c "from data.quality_framework import validate_taxi_dataset; validate_taxi_dataset(df)"
 pytest tests/unit/test_quality_framework.py -v
 
 # 5. Enhanced API Docs
-python -c "from src.deployment.enhanced_api_docs import APIDocumentationGenerator; APIDocumentationGenerator.save_documentation()"
+python -c "from deployment.enhanced_api_docs import APIDocumentationGenerator; APIDocumentationGenerator.save_documentation()"
 ```
 
 ---
@@ -225,7 +225,7 @@ pip install -e ".[dev]"   # Reinstall
 taskkill /F /IM python.exe
 
 # Data files missing
-python -m src.data.ingest    # Re-download
+python -m data.ingest    # Re-download
 
 # MLflow issues
 mlflow server --host 0.0.0.0 --port 5000    # Restart

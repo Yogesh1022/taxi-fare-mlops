@@ -83,7 +83,7 @@ make clean          # Cleanup artifacts
 |-----------|--------|----------|
 | **Reproducible Setup** | ✅ | `make setup` installs dependencies in <15 min |
 | **Docker Build** | ✅ | Dockerfile builds, health checks configured |
-| **Module Execution** | ✅ | `python -m src.models.train` runs without errors |
+| **Module Execution** | ✅ | `python -m models.train` runs without errors |
 | **Makefile Commands** | ✅ | setup, lint, test, train, serve + 7 more |
 | **GitHub Actions CI** | ✅ | .github/workflows/ci.yml configured |
 
@@ -126,7 +126,7 @@ cd taxi-fare-prediction
 make setup        # ~10 minutes
 
 # Verify:
-python -m src.models.train --help
+python -m models.train --help
 
 # Develop:
 make lint         # Check code

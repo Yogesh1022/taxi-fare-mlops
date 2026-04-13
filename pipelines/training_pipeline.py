@@ -10,9 +10,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
-from src.features.pipeline import build_feature_pipeline, fit_and_save_pipeline, get_feature_names
-from src.utils.config import MODEL_DIR, PROCESSED_DATA_DIR, RANDOM_STATE
-from src.utils.logger import logger
+from features.pipeline import build_feature_pipeline, fit_and_save_pipeline, get_feature_names
+from utils.config import MODEL_DIR, PROCESSED_DATA_DIR, RANDOM_STATE
+from utils.logger import logger
 
 
 def main():

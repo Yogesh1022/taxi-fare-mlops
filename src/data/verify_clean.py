@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data.validate import DataValidator
-from src.utils.logger import logger
+from data.validate import DataValidator
+from utils.logger import logger
 
 
 def verify_clean_data():

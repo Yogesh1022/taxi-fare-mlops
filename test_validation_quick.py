@@ -7,7 +7,7 @@ sys.path.insert(0, '.')
 
 import pandas as pd
 
-from src.data.validate import DataValidator
+from data.validate import DataValidator
 
 # Load test data
 df = pd.read_csv('data/raw/train.csv')

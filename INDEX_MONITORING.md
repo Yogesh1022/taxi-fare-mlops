@@ -67,7 +67,7 @@ docker-compose -f docker/docker-compose.yml up -d
 
 ### Instrument Your Code
 ```python
-from src.monitoring import setup_monitoring, track_latency
+from monitoring import setup_monitoring, track_latency
 
 app = Flask(__name__)
 tracing, logger = setup_monitoring(app)

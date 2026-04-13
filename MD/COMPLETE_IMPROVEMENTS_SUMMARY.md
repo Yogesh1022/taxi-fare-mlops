@@ -140,7 +140,7 @@ Explainability [SHAP analysis]
 
 ### 1. SHAP Explainability
 ```python
-from src.models.explainability import ExplainabilityAnalyzer
+from models.explainability import ExplainabilityAnalyzer
 
 analyzer = ExplainabilityAnalyzer(trained_model)
 explanation = analyzer.explain_prediction(model, X_test, idx=0)
@@ -149,7 +149,7 @@ explanation = analyzer.explain_prediction(model, X_test, idx=0)
 
 ### 2. Grafana Monitoring
 ```python
-from src.deployment.grafana_integration import create_monitoring_setup
+from deployment.grafana_integration import create_monitoring_setup
 
 setup = create_monitoring_setup()
 # Returns: Prometheus + 3 Grafana dashboards
@@ -158,7 +158,7 @@ setup = create_monitoring_setup()
 
 ### 3. Model Optimization
 ```python
-from src.deployment.optimization import optimize_model_for_production
+from deployment.optimization import optimize_model_for_production
 
 optimizer = optimize_model_for_production(
     model=trained_model,
@@ -170,7 +170,7 @@ optimizer = optimize_model_for_production(
 
 ### 4. Data Quality
 ```python
-from src.data.quality_framework import validate_taxi_dataset
+from data.quality_framework import validate_taxi_dataset
 
 results = validate_taxi_dataset(
     df=training_data,
@@ -181,7 +181,7 @@ results = validate_taxi_dataset(
 
 ### 5. API Documentation
 ```python
-from src.deployment.enhanced_api_docs import APIDocumentationGenerator
+from deployment.enhanced_api_docs import APIDocumentationGenerator
 
 docs = APIDocumentationGenerator.generate_complete_documentation()
 APIDocumentationGenerator.save_documentation()

@@ -56,7 +56,7 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
-    command: uvicorn src.deployment.api:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn deployment.api:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ../src:/app/src
       - ../data:/app/data

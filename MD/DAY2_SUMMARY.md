@@ -49,12 +49,12 @@ Successfully implemented **Day 2 - Data Versioning and Data Contracts** for the 
 ```yaml
 stages:
   ingest:
-    cmd: python -m src.data.ingest
+    cmd: python -m data.ingest
     deps: data/raw/*.csv
     outs: data/processed/ingested_*.csv
   
   validate:
-    cmd: python src/data/validate_run.py  
+    cmd: python -m data.validate_run  
     deps: data/raw/*.csv
     outs: mlops/data_quality/validation_report.json
     metrics: mlops/data_quality/validation_metrics.json
@@ -183,7 +183,7 @@ Feature Engineering (Day 3 - Ready)
 make dvc-data
 
 # Option 2: Direct Python
-python src/data/validate_run.py
+python -m data.validate_run
 
 # Option 3: DVC (once configured)
 dvc repro

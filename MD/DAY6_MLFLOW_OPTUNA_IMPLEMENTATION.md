@@ -38,7 +38,7 @@ Hyperparameter-Tuning (parent)
 ```python
 import mlflow
 from mlflow import log_metric, log_params, log_artifact
-from src.utils.config import MLFLOW_TRACKING_URI, MLFLOW_EXPERIMENT_NAME
+from utils.config import MLFLOW_TRACKING_URI, MLFLOW_EXPERIMENT_NAME
 ```
 
 **Class: HyperparameterTuner**
@@ -236,7 +236,7 @@ export MLFLOW_TRACKING_URI=postgresql://user:pass@localhost/mlflow
 
 ### 1. **Run Tuning with MLflow**
 ```python
-from src.models.tune import tune_top_3_models
+from models.tune import tune_top_3_models
 
 results = tune_top_3_models(
     X_train, X_val, X_test,

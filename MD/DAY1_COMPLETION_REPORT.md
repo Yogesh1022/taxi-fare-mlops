@@ -97,7 +97,7 @@ Created module structure with stubs:
    - API Dockerfile builds
    - docker-compose.yml validated
 
-3. ✅ **Module Execution**: `python -m src.models.train` runs
+3. ✅ **Module Execution**: `python -m models.train` runs
    - All modules properly packaged with __init__.py
    - Imports work correctly
 

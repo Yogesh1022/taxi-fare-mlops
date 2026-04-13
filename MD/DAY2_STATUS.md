@@ -79,7 +79,7 @@ make dvc-init
 make dvc-data
 
 # Or run directly
-python src/data/validate_run.py
+python -m data.validate_run
 ```
 
 ### View Reports

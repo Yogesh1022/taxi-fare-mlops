@@ -73,7 +73,7 @@ KIBANA_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
 ### Application Instrumentation
 
 ```python
-from src.monitoring import setup_monitoring
+from monitoring import setup_monitoring
 
 # In your Flask app
 app = Flask(__name__)
@@ -88,7 +88,7 @@ tracing, logger = setup_monitoring(
 # Log metrics endpoint
 @app.route("/metrics")
 def metrics():
-    from src.monitoring import get_metrics_registry
+    from monitoring import get_metrics_registry
     registry = get_metrics_registry()
     return generate_latest(registry.registry)
 ```

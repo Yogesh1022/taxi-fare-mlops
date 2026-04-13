@@ -34,27 +34,27 @@
 
 #### 1. Ensemble Models
 **Location**: `src/models/ensemble.py` (17.1KB)  
-**Import**: `from src.models.ensemble import EnsembleModelTrainer`  
+**Import**: `from models.ensemble import EnsembleModelTrainer`  
 **Use**: Combine multiple models for improved accuracy
 
 #### 2. Bayesian Tuning
 **Location**: `src/models/bayesian_tuning.py` (17.1KB)  
-**Import**: `from src.models.bayesian_tuning import BayesianHyperparameterTuner`  
+**Import**: `from models.bayesian_tuning import BayesianHyperparameterTuner`  
 **Use**: Optimize 100+ hyperparameters efficiently
 
 #### 3. Feature Selection
 **Location**: `src/features/feature_selection.py` (19.4KB)  
-**Import**: `from src.features.feature_selection import FeatureSelector`  
+**Import**: `from features.feature_selection import FeatureSelector`  
 **Use**: Select important features from dataset
 
 #### 4. Anomaly Detection
 **Location**: `src/deployment/drift_detection.py` (17.7KB)  
-**Import**: `from src.deployment.drift_detection import DriftDetector, AnomalyDetector`  
+**Import**: `from deployment.drift_detection import DriftDetector, AnomalyDetector`  
 **Use**: Detect outliers and data drift
 
 #### 5. A/B Testing
 **Location**: `src/deployment/ab_testing.py` (16.5KB)  
-**Import**: `from src.deployment.ab_testing import ABTester`  
+**Import**: `from deployment.ab_testing import ABTester`  
 **Use**: Statistical model comparison
 
 ---
@@ -63,27 +63,27 @@
 
 #### 6. SHAP Explainability
 **Location**: `src/models/explainability.py` (12KB)  
-**Import**: `from src.models.explainability import SHAPExplainer`  
+**Import**: `from models.explainability import SHAPExplainer`  
 **Use**: Explain individual predictions
 
 #### 7. Grafana Integration
 **Location**: `src/deployment/grafana_integration.py` (20.5KB)  
-**Import**: `from src.deployment.grafana_integration import GrafanaIntegration`  
+**Import**: `from deployment.grafana_integration import GrafanaIntegration`  
 **Use**: Real-time operational dashboards
 
 #### 8. Model Optimization
 **Location**: `src/deployment/optimization.py` (15.4KB)  
-**Import**: `from src.deployment.optimization import ModelOptimizer`  
+**Import**: `from deployment.optimization import ModelOptimizer`  
 **Use**: Optimize models for speed/size
 
 #### 9. Data Quality Framework
 **Location**: `src/data/quality_framework.py` (18.2KB)  
-**Import**: `from src.data.quality_framework import DataQualityValidator`  
+**Import**: `from data.quality_framework import DataQualityValidator`  
 **Use**: Validate data quality with 50+ checks
 
 #### 10. Enhanced API Docs
 **Location**: `src/deployment/enhanced_api_docs.py` (20.1KB)  
-**Import**: `from src.deployment.enhanced_api_docs import EnhancedAPIDocumentation`  
+**Import**: `from deployment.enhanced_api_docs import EnhancedAPIDocumentation`  
 **Use**: OpenAPI 3.0 documentation
 
 ---
@@ -93,12 +93,12 @@
 ### Task 1: Improve Model Accuracy
 ```python
 # Step 1: Tune hyperparameters with Bayesian search
-from src.models.bayesian_tuning import BayesianHyperparameterTuner
+from models.bayesian_tuning import BayesianHyperparameterTuner
 tuner = BayesianHyperparameterTuner(n_trials=100)
 best_model, score = tuner.tune_model(X_train, y_train, X_val, y_val)
 
 # Step 2: Create ensemble from multiple models
-from src.models.ensemble import EnsembleModelTrainer
+from models.ensemble import EnsembleModelTrainer
 trainer = EnsembleModelTrainer()
 ensemble = trainer.create_stacking_ensemble(X_train, y_train)
 ensemble_score = trainer.evaluate(X_test, y_test)
@@ -109,18 +109,18 @@ ensemble_score = trainer.evaluate(X_test, y_test)
 ### Task 2: Deploy to Production
 ```python
 # Step 1: Validate data quality
-from src.data.quality_framework import DataQualityValidator
+from data.quality_framework import DataQualityValidator
 validator = DataQualityValidator()
 quality_report = validator.validate(df)
 quality_score = validator.get_quality_score(df)
 
 # Step 2: Optimize model
-from src.deployment.optimization import ModelOptimizer
+from deployment.optimization import ModelOptimizer
 optimizer = ModelOptimizer(model)
 onnx_path = optimizer.export_to_onnx(X_sample)
 
 # Step 3: Generate documentation
-from src.deployment.enhanced_api_docs import EnhancedAPIDocumentation
+from deployment.enhanced_api_docs import EnhancedAPIDocumentation
 docs = EnhancedAPIDocumentation()
 yaml_schema = docs.export_as_yaml()
 
@@ -130,7 +130,7 @@ yaml_schema = docs.export_as_yaml()
 ### Task 3: Monitor for Data Drift
 ```python
 # Step 1: Set up drift detection
-from src.deployment.drift_detection import DriftDetector
+from deployment.drift_detection import DriftDetector
 detector = DriftDetector()
 detector.fit(X_reference)
 
@@ -139,7 +139,7 @@ anomalies, scores = detector.predict_anomalies(X_new)
 drift_report = detector.detect_drift(X_new, X_reference)
 
 # Step 3: Integrate with Grafana dashboard
-from src.deployment.grafana_integration import GrafanaIntegration
+from deployment.grafana_integration import GrafanaIntegration
 grafana = GrafanaIntegration()
 grafana.create_drift_dashboard()
 
@@ -149,7 +149,7 @@ grafana.create_drift_dashboard()
 ### Task 4: Explain Predictions
 ```python
 # Step 1: Initialize SHAP explainer
-from src.models.explainability import SHAPExplainer
+from models.explainability import SHAPExplainer
 explainer = SHAPExplainer(model)
 explainer.fit(X, feature_names)
 
@@ -165,7 +165,7 @@ fig.show()
 
 ### Task 5: A/B Test Two Models
 ```python
-from src.deployment.ab_testing import ABTester
+from deployment.ab_testing import ABTester
 
 # Initialize tester
 tester = ABTester(alpha=0.05, power=0.80)

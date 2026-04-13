@@ -32,8 +32,8 @@ MLflow Experiment: taxi-fare-prediction
 ### 1. Basic Usage with MLflow Enabled (Default)
 
 ```python
-from src.models.tune import HyperparameterTuner, tune_top_3_models
-from src.data.ingest import load_processed_data
+from models.tune import HyperparameterTuner, tune_top_3_models
+from data.ingest import load_processed_data
 import pandas as pd
 
 # Load data
@@ -64,7 +64,7 @@ print("  mlflow ui --backend-store-uri ./mlruns")
 ### 2. Convenience Function
 
 ```python
-from src.models.tune import tune_top_3_models
+from models.tune import tune_top_3_models
 
 # Tune all models with MLflow tracking
 results = tune_top_3_models(
@@ -200,7 +200,7 @@ Open browser: `http://localhost:5000`
 ### Custom MLflow Tracking URI
 ```python
 import os
-from src.utils.config import MLFLOW_TRACKING_URI
+from utils.config import MLFLOW_TRACKING_URI
 
 # Use database backend (recommended for production)
 os.environ['MLFLOW_TRACKING_URI'] = 'sqlite:///mlflow.db'
@@ -212,7 +212,7 @@ tuner = HyperparameterTuner(..., use_mlflow=True)
 ### Custom Experiment Name
 ```python
 import mlflow
-from src.utils.config import MLFLOW_EXPERIMENT_NAME
+from utils.config import MLFLOW_EXPERIMENT_NAME
 
 # Set experiment before creating tuner
 mlflow.set_experiment("custom-experiment-name")

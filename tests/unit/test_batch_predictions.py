@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.deployment.batch_predictions import (
+from deployment.batch_predictions import (
     BatchPredictor,
     PredictionMonitor,
     run_batch_predictions,
@@ -50,7 +50,7 @@ class TestBatchPredictor:
         result = predictor.load_production_model()
         assert result is False
 
-    @patch("src.deployment.batch_predictions.mlflow")
+    @patch("deployment.batch_predictions.mlflow")
     def test_load_with_mlflow(self, mock_mlflow):
         """Test loading model with MLflow."""
         predictor = BatchPredictor(use_mlflow=True)
@@ -307,7 +307,7 @@ class TestBatchPredictionEdgeCases:
 class TestIntegrationWithMLflow:
     """Test MLflow integration."""
 
-    @patch("src.deployment.batch_predictions.mlflow")
+    @patch("deployment.batch_predictions.mlflow")
     def test_log_to_mlflow(self, mock_mlflow):
         """Test logging to MLflow."""
         predictor = BatchPredictor(use_mlflow=True)

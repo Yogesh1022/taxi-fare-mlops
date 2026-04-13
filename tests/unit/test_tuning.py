@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.models.tune import HyperparameterTuner, tune_top_3_models
+from models.tune import HyperparameterTuner, tune_top_3_models
 
 
 # Sample data fixtures

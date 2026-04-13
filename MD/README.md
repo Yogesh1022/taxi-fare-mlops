@@ -38,7 +38,7 @@ cd taxi-fare-prediction
 make setup
 
 # Verify installation
-python -m src.models.train --help
+python -m models.train --help
 ```
 
 **Expected time:** <15 minutes on fresh machine
@@ -184,7 +184,7 @@ See `pyproject.toml` for complete version specs.
 
 - [x] New machine can run project in <15 minutes → `make setup` works
 - [x] Container builds successfully
-- [x] `python -m src.models.train` executes without environment errors
+- [x] `python -m models.train` executes without environment errors
 - [x] Makefile provides setup, lint, test, train, serve commands
 - [x] GitHub Actions CI runs on PRs
 

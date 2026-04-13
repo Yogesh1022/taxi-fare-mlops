@@ -56,7 +56,7 @@ Batch Prediction Pipeline:
 
 **1. Batch Prediction**
 ```python
-from src.deployment.batch_predictions import BatchPredictor
+from deployment.batch_predictions import BatchPredictor
 
 predictor = BatchPredictor(model_name="taxi-fare-xgboost")
 predictor.load_production_model()
@@ -77,7 +77,7 @@ stats = predictor.get_prediction_statistics()
 
 **3. Prediction Monitoring**
 ```python
-from src.deployment.batch_predictions import PredictionMonitor
+from deployment.batch_predictions import PredictionMonitor
 
 monitor = PredictionMonitor(baseline_metrics={
     'mean_prediction': 13.2,

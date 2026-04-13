@@ -247,7 +247,7 @@ SUCCESS: MLflow + Optuna Integration WORKING ✅
 
 ### Example 1: Basic Usage
 ```python
-from src.models.tune import tune_top_3_models
+from models.tune import tune_top_3_models
 
 results = tune_top_3_models(
     X_train, X_val, X_test,
@@ -259,7 +259,7 @@ results = tune_top_3_models(
 
 ### Example 2: Direct Class Usage
 ```python
-from src.models.tune import HyperparameterTuner
+from models.tune import HyperparameterTuner
 
 tuner = HyperparameterTuner(
     X_train, X_val, y_train, y_val, X_test, y_test,

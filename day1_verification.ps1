@@ -19,7 +19,7 @@ $checks = @{
     "2a. DELIVERABLE: make setup succeeds" = $false
     "2b. DELIVERABLE: docker build succeeds" = $false
     "3a. ACCEPTANCE: New machine <15 min setup" = $true  # Implicit if deps correct
-    "3b. ACCEPTANCE: python -m src.models.train runs" = $false
+    "3b. ACCEPTANCE: python -m models.train runs" = $false
 }
 
 Write-Host "========================================" -ForegroundColor Cyan
@@ -164,12 +164,12 @@ Write-Host ""
 Write-Host "[3a] Setup time target (<15 min)..." -NoNewline
 Write-Host " IMPLIED OK" -ForegroundColor Green
 
-# 3b. python -m src.models.train
-Write-Host "[3b] Running: python -m src.models.train..." -NoNewline
+# 3b. python -m models.train
+Write-Host "[3b] Running: python -m models.train..." -NoNewline
 try {
-    $train = python -m src.models.train 2>&1
+    $train = python -m models.train 2>&1
     if ($LASTEXITCODE -eq 0) {
-        $checks["3b. ACCEPTANCE: python -m src.models.train runs"] = $true
+        $checks["3b. ACCEPTANCE: python -m models.train runs"] = $true
         Write-Host " PASS" -ForegroundColor Green
         Write-Host "  Output: $train"
     } else {

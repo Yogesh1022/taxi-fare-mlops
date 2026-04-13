@@ -6,10 +6,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.features.pipeline import load_pipeline
-from src.models.tune import tune_top_3_models
-from src.utils.config import MODEL_DIR, PROCESSED_DATA_DIR, RANDOM_STATE
-from src.utils.logger import logger
+from features.pipeline import load_pipeline
+from models.tune import tune_top_3_models
+from utils.config import MODEL_DIR, PROCESSED_DATA_DIR, RANDOM_STATE
+from utils.logger import logger
 
 
 def main():

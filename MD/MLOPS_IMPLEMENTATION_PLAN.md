@@ -165,7 +165,7 @@ Deliverables:
 
 Acceptance criteria:
 - New machine can run project in <15 minutes
-- `python -m src.models.train` executes without environment errors
+- `python -m models.train` executes without environment errors
 
 ---
 
@@ -601,8 +601,8 @@ pip install -r requirements.txt
  mlflow ui
 
 # Run training
-python -m src.models.train
-python -m src.models.tune
+python -m models.train
+python -m models.tune
 
 # Serve API
 uvicorn src.deployment.api:app --reload --host 0.0.0.0 --port 8000

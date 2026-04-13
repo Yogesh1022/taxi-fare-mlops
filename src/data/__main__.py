@@ -1,6 +1,6 @@
 """Run data ingestion stage."""
 
-from src.data.ingest import main
+from data.ingest import main
 
 if __name__ == "__main__":
     main()

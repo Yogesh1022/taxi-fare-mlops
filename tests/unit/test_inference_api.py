@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 from fastapi.testclient import TestClient
 
-from src.deployment.inference_api import BatchPredictionRequest, PredictionRequest, app
+from deployment.inference_api import BatchPredictionRequest, PredictionRequest, app
 
 
 @pytest.fixture
@@ -17,7 +17,7 @@ def client():
     # Mock predictor to avoid model loading issues in tests
     from unittest.mock import Mock
 
-    from src.deployment import inference_api
+    from deployment import inference_api
 
     mock_predictor = Mock()
     mock_model = Mock()

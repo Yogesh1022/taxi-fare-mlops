@@ -418,7 +418,7 @@ class WebhookDocumentation:
             "authentication": {
                 "method": "HMAC-SHA256",
                 "header": "X-Webhook-Signature",
-                "secret_header": "X-Webhook-Secret",
+                "secret_header": "X-Webhook-Secret",  # nosec B105
             },
             "testing": {
                 "webhook_url": "/webhooks/test",

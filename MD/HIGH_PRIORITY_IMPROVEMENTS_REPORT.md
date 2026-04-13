@@ -102,7 +102,7 @@ Best Baseline (SVM):          R² = 0.8832, MAE = $3.58
 ### 🔧 How to Use
 
 ```python
-from src.models.ensemble import build_ensemble_pipeline
+from models.ensemble import build_ensemble_pipeline
 
 # Train ensemble
 best_model, results = build_ensemble_pipeline(
@@ -261,7 +261,7 @@ Total Potential Gain: +1-2% across models
 ### 🔧 How to Use
 
 ```python
-from src.models.bayesian_tuning import run_bayesian_tuning
+from models.bayesian_tuning import run_bayesian_tuning
 
 # Run tuning (100 trials per model)
 tuner = run_bayesian_tuning(X_train, y_train, n_trials=100)
@@ -454,7 +454,7 @@ All Features                35             0.8832           0%
 ### 🔧 How to Use
 
 ```python
-from src.features.feature_selection import FeatureSelector
+from features.feature_selection import FeatureSelector
 
 selector = FeatureSelector(feature_names=feature_names)
 
@@ -662,7 +662,7 @@ Example Output:
 ### 🔧 How to Use
 
 ```python
-from src.deployment.drift_detection import run_comprehensive_drift_detection
+from deployment.drift_detection import run_comprehensive_drift_detection
 
 # Run drift detection
 results = run_comprehensive_drift_detection(
@@ -829,7 +829,7 @@ Step 4: Decision
 ### 🔧 How to Use
 
 ```python
-from src.deployment.ab_testing import ABTestManager, run_ab_test
+from deployment.ab_testing import ABTestManager, run_ab_test
 
 # Method 1: Manual Control
 manager = ABTestManager(test_name='svm_vs_stacked')
@@ -1112,7 +1112,7 @@ Rationale:
 ```bash
 # Train ensemble and save
 python -c "
-from src.models.ensemble import build_ensemble_pipeline
+from models.ensemble import build_ensemble_pipeline
 best_model, results = build_ensemble_pipeline(X_train, y_train, X_val, y_val, X_test, y_test)
 "
 
@@ -1123,7 +1123,7 @@ best_model, results = build_ensemble_pipeline(X_train, y_train, X_val, y_val, X_
 ```bash
 # Tune all models (2-3 hours)
 python -c "
-from src.models.bayesian_tuning import run_bayesian_tuning
+from models.bayesian_tuning import run_bayesian_tuning
 tuner = run_bayesian_tuning(X_train, y_train, n_trials=100)
 "
 
@@ -1134,7 +1134,7 @@ tuner = run_bayesian_tuning(X_train, y_train, n_trials=100)
 ```bash
 # Select features using all methods
 python -c "
-from src.features.feature_selection import FeatureSelector
+from features.feature_selection import FeatureSelector
 selector = FeatureSelector(feature_names=names)
 results = selector.run_all_methods(X_train, y_train)
 selector.save_results()
@@ -1147,7 +1147,7 @@ selector.save_results()
 ```bash
 # Check for distribution shift
 python -c "
-from src.deployment.drift_detection import run_comprehensive_drift_detection
+from deployment.drift_detection import run_comprehensive_drift_detection
 results = run_comprehensive_drift_detection(X_reference, X_current, feature_names)
 "
 
@@ -1158,7 +1158,7 @@ results = run_comprehensive_drift_detection(X_reference, X_current, feature_name
 ```bash
 # Compare two models
 python -c "
-from src.deployment.ab_testing import run_ab_test
+from deployment.ab_testing import run_ab_test
 conclusion = run_ab_test(model_a, model_b, X_test, y_test, test_name='test1')
 "
 

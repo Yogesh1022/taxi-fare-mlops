@@ -21,9 +21,9 @@ os.environ['MLFLOW_EXPERIMENT_NAME'] = 'taxi-fare-prediction'
 import mlflow
 
 # Project imports
-from src.models.tune import HyperparameterTuner, tune_top_3_models
-from src.utils.logger import logger
-from src.utils.config import MODEL_DIR
+from models.tune import HyperparameterTuner, tune_top_3_models
+from utils.logger import logger
+from utils.config import MODEL_DIR
 
 
 def example_1_basic_tuning():

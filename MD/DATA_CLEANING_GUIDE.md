@@ -32,7 +32,7 @@ cd e:\TaxiFare\ MLOps
 .\.venv\Scripts\Activate.ps1
 
 # Run cleaning script
-python -m src.data.clean
+python -m data.clean
 ```
 
 **Expected Output:**
@@ -58,7 +58,7 @@ Cleaning complete! Final shape: (1500, 17)
 ### **Step 3: Verify Cleaned Data Passes Validation**
 ```powershell
 # Run verification script
-python -m src.data.verify_clean
+python -m data.verify_clean
 ```
 
 **Expected Output:**
@@ -101,7 +101,7 @@ Copy-Item "data/clean/test_clean.csv" "data/raw/test.csv" -Force
 ```yaml
 stages:
   clean:
-    cmd: python -m src.data.clean
+    cmd: python -m data.clean
     deps:
       - data/raw/train.csv
       - data/raw/test.csv
@@ -110,7 +110,7 @@ stages:
       - data/clean/test_clean.csv
   
   ingest:
-    cmd: python -m src.data.ingest
+    cmd: python -m data.ingest
     deps:
       - data/clean/train_clean.csv      ← Now reads from clean folder
       - data/clean/test_clean.csv
@@ -138,7 +138,7 @@ dvc repro -s clean
 
 ```powershell
 # Validate the fixed data
-python src/data/validate_run.py
+python -m data.validate_run
 ```
 
 **Expected Output:**
@@ -242,10 +242,10 @@ total_amount = fare(estimated) + extra + tip + tolls + surcharges
 ### **Error: "FileNotFoundError: data/raw/train.csv"**
 ```powershell
 # Run cleaning first
-python -m src.data.clean
+python -m data.clean
 
 # Then verify
-python -m src.data.verify_clean
+python -m data.verify_clean
 ```
 
 ### **Error: "Module not found: src.data.clean"**
@@ -260,7 +260,7 @@ Get-ChildItem -Path "src/data/__init__.py"
 ### **Data Still Failing Validation?**
 ```powershell
 # Check what's failing
-python src/data/validate_run.py
+python -m data.validate_run
 
 # Review the markdown report
 Get-Content "mlops/data_quality/data_quality_*.md" | Select -First 50
@@ -272,20 +272,20 @@ Get-Content "mlops/data_quality/data_quality_*.md" | Select -First 50
 
 After following all steps:
 
-- [ ] Ran `python -m src.data.clean` successfully
+- [ ] Ran `python -m data.clean` successfully
 - [ ] Created `data/clean/train_clean.csv` and `data/clean/test_clean.csv`
-- [ ] Ran `python -m src.data.verify_clean` - both PASSED
+- [ ] Ran `python -m data.verify_clean` - both PASSED
 - [ ] Backed up original raw data
 - [ ] (Option A) Copied clean data to raw folder
 - [ ] (Option B) Set up DVC pipeline
-- [ ] Ran validation: `python src/data/validate_run.py` - ✅ PASSED
+- [ ] Ran validation: `python -m data.validate_run` - ✅ PASSED
 
 ---
 
 ## 📊 Next Steps After Data Fix
 
-1. **Data Splitting:** `python -m src.data.split`
-2. **Feature Engineering:** `python -m src.features.pipeline`
+1. **Data Splitting:** `python -m data.split`
+2. **Feature Engineering:** `python -m features.pipeline`
 3. **Model Training:** `python -m pipelines.training_pipeline`
 4. **Evaluation:** Check MLflow in `mlruns/` folder
 

@@ -394,7 +394,7 @@ python -m pipelines.tuning_pipeline --enable-mlflow
 ### Python Commands
 ```python
 # Run tuning with MLflow enabled
-from src.models.tune import tune_top_3_models
+from models.tune import tune_top_3_models
 
 results = tune_top_3_models(
     X_train, X_val, X_test,

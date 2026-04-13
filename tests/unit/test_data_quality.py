@@ -7,7 +7,7 @@ from tempfile import TemporaryDirectory
 import pandas as pd
 import pytest
 
-from src.data.quality import DataQualityReport
+from data.quality import DataQualityReport
 
 
 @pytest.fixture

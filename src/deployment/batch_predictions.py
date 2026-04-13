@@ -9,8 +9,8 @@ import mlflow
 import numpy as np
 import pandas as pd
 
-from src.utils.config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MODEL_DIR
-from src.utils.logger import logger
+from utils.config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MODEL_DIR
+from utils.logger import logger
 
 
 class BatchPredictor:

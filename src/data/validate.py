@@ -8,8 +8,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.data.schema import CRITICAL_FIELDS, OUTLIER_IQR_MULTIPLIER, DataSchema, DataType
-from src.utils.logger import logger
+from data.schema import CRITICAL_FIELDS, OUTLIER_IQR_MULTIPLIER, DataSchema, DataType
+from utils.logger import logger
 
 
 class DataValidator:
@@ -81,19 +81,19 @@ class DataValidator:
                 try:
                     pd.to_numeric(col, errors="coerce")
                     dtype_valid = True
-                except:
+                except (TypeError, ValueError):
                     pass
             elif col_spec.dtype == DataType.INT:
                 try:
                     col.astype(int)
                     dtype_valid = True
-                except:
+                except (TypeError, ValueError):
                     pass
             elif col_spec.dtype == DataType.DATETIME:
                 try:
                     pd.to_datetime(col, errors="coerce")
                     dtype_valid = True
-                except:
+                except (TypeError, ValueError):
                     pass
             elif col_spec.dtype == DataType.STRING:
                 dtype_valid = col.dtype == object

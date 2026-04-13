@@ -344,7 +344,7 @@ kubectl apply -f monitoring/elk/elk-stack.yaml
 
 ### Application Instrumentation
 ```python
-from src.monitoring import setup_monitoring, track_latency
+from monitoring import setup_monitoring, track_latency
 
 app = Flask(__name__)
 tracing, logger = setup_monitoring(app)

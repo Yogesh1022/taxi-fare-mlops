@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.models.train import BaselineModelTrainer, train_baseline_models
+from models.train import BaselineModelTrainer, train_baseline_models
 
 
 # Sample data fixtures

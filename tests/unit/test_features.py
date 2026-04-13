@@ -6,13 +6,13 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.features.pipeline import (
+from features.pipeline import (
     build_feature_pipeline,
     fit_and_save_pipeline,
     load_pipeline,
     transform_features,
 )
-from src.features.transformers import (
+from features.transformers import (
     CategoricalEncoder,
     DatetimeFeatureExtractor,
     FareComponentAggregator,

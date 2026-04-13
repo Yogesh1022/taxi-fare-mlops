@@ -91,7 +91,7 @@
 
 ```yaml
 baseline:
-  cmd: python -m src.models.baseline
+  cmd: python -m models.baseline
   deps:
   - data/processed/ingested_train.csv
   - src/models/baseline.py

@@ -52,7 +52,7 @@ echo ✅ Setup complete!
 echo.
 echo Next steps:
 echo 1. Activate environment: .venv\Scripts\activate
-echo 2. Verify: python -m src.models.train --help
+echo 2. Verify: python -m models.train --help
 echo 3. Run tests: make test
 echo 4. View commands: make help
 echo.

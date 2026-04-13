@@ -62,7 +62,7 @@ python -m pip install --upgrade pip
 pip install -e ".[dev]"
 
 # Verify installation
-python -m src.models.train --help
+python -m models.train --help
 ```
 
 **Expected Output:** Help message showing model training options
@@ -102,10 +102,10 @@ test.csv   (2MB+)
 
 ```bash
 # 1. Run data ingestion and validation
-python -m src.data.ingest
+python -m data.ingest
 
 # 2. Validate data pipeline
-python src/data/validate_run.py
+python -m data.validate_run
 
 # 3. Check generated files
 ls data/processed/
@@ -146,7 +146,7 @@ pytest tests/unit/test_data.py -v
 # 1. Load data
 python -c "
 import pandas as pd
-from src.features.pipeline import FeaturePipeline
+from features.pipeline import FeaturePipeline
 
 # Load raw data
 df = pd.read_csv('data/raw/train.csv')
@@ -186,8 +186,8 @@ pytest tests/unit/test_features.py -v
 ```bash
 # 1. Train baseline models
 python -c "
-from src.models.train import train_baseline_models
-from src.features.pipeline import FeaturePipeline
+from models.train import train_baseline_models
+from features.pipeline import FeaturePipeline
 import pandas as pd
 
 # Load and prepare data
@@ -231,7 +231,7 @@ python pipelines/training_pipeline.py --models xgboost lgbm catboost
 
 # 2. Compare model performance
 python -c "
-from src.models.evaluate import compare_models
+from models.evaluate import compare_models
 import json
 
 results = compare_models()
@@ -266,7 +266,7 @@ pytest tests/unit/test_models.py -v -k tree
 ```bash
 # 1. Run hyperparameter tuning (Optuna)
 python -c "
-from src.models.tune import optimize_hyperparameters
+from models.tune import optimize_hyperparameters
 
 best_params, best_value = optimize_hyperparameters(
     n_trials=50,
@@ -278,7 +278,7 @@ print(f'Best R²: {best_value}')
 
 # 2. Analyze bottlenecks
 python -c "
-from src.models.evaluate import analyze_bottlenecks
+from models.evaluate import analyze_bottlenecks
 results = analyze_bottlenecks()
 print(results)
 "
@@ -316,7 +316,7 @@ mlflow server --host 0.0.0.0 --port 5000
 # 2. Run training with MLflow logging
 python -c "
 import mlflow
-from src.models.train import train_with_mlflow
+from models.train import train_with_mlflow
 
 mlflow.set_tracking_uri('http://localhost:5000')
 mlflow.set_experiment('taxi-fare-experiment')
@@ -353,7 +353,7 @@ print(results)
 ```bash
 # 1. Register best model
 python -c "
-from src.models.registry import register_model
+from models.registry import register_model
 
 model_uri = register_model(
     run_id='<best_run_id>',
@@ -365,7 +365,7 @@ print(f'Registered model: {model_uri}')
 
 # 2. Push to model stage
 python -c "
-from src.models.registry import transition_model_stage
+from models.registry import transition_model_stage
 
 transition_model_stage(
     model_name='taxi-fare-prediction',
@@ -404,7 +404,7 @@ pytest tests/unit/test_models.py -v -k registry
 ```bash
 # 1. Generate batch predictions
 python -c "
-from src.models.predict import batch_predict
+from models.predict import batch_predict
 import pandas as pd
 
 # Load test data
@@ -418,7 +418,7 @@ print(f'Total predictions: {len(results)}')
 
 # 2. Save predictions
 python -c "
-from src.models.predict import batch_predict_and_save
+from models.predict import batch_predict_and_save
 batch_predict_and_save(
     input_file='data/raw/test.csv',
     output_file='data/processed/predictions.csv',
@@ -575,7 +575,7 @@ These were implemented in the previous phase:
 ```bash
 # Test ensemble models
 python -c "
-from src.models.ensemble import EnsembleModel
+from models.ensemble import EnsembleModel
 
 ensemble = EnsembleModel(
     models=['xgboost', 'lgbm', 'catboost'],
@@ -589,7 +589,7 @@ print(f'Ensemble R²: {ensemble.score()}')
 ```bash
 # Test Bayesian tuning
 python -c "
-from src.models.bayesian_tuning import BayesianOptimizer
+from models.bayesian_tuning import BayesianOptimizer
 
 optimizer = BayesianOptimizer(n_trials=100)
 best_params = optimizer.optimize()
@@ -601,7 +601,7 @@ print(f'Best params: {best_params}')
 ```bash
 # Test feature selection
 python -c "
-from src.features.feature_selection import FeatureSelector
+from features.feature_selection import FeatureSelector
 
 selector = FeatureSelector(method='shap')
 selected_features = selector.select(X, y, n_features=7)
@@ -613,7 +613,7 @@ print(f'Selected {len(selected_features)} features')
 ```bash
 # Test anomaly detection
 python -c "
-from src.deployment.drift_detection import AnomalyDetector
+from deployment.drift_detection import AnomalyDetector
 
 detector = AnomalyDetector()
 anomalies = detector.detect(X)
@@ -625,7 +625,7 @@ print(f'Anomalies detected: {len(anomalies)}')
 ```bash
 # Test A/B testing
 python -c "
-from src.deployment.ab_testing import ABTestingFramework
+from deployment.ab_testing import ABTestingFramework
 
 ab_test = ABTestingFramework(model_a, model_b)
 results = ab_test.run_test(X_test, y_test)
@@ -641,7 +641,7 @@ print(f'Significant difference: {results.significant}')
 ```bash
 # Test SHAP explanations
 python -c "
-from src.models.explainability import ExplainabilityAnalyzer
+from models.explainability import ExplainabilityAnalyzer
 
 analyzer = ExplainabilityAnalyzer(trained_model)
 explanation = analyzer.explain_prediction(model, X_test, idx=0)
@@ -657,7 +657,7 @@ docker-compose -f docker/docker-compose.yml up -d
 
 # Test monitoring
 python -c "
-from src.deployment.grafana_integration import create_monitoring_setup
+from deployment.grafana_integration import create_monitoring_setup
 
 setup = create_monitoring_setup()
 print('Monitoring setup created')
@@ -675,7 +675,7 @@ print(f'Prometheus: http://localhost:9090')
 ```bash
 # Test model optimization
 python -c "
-from src.deployment.optimization import ModelOptimizer
+from deployment.optimization import ModelOptimizer
 
 optimizer = ModelOptimizer(trained_model)
 results = optimizer.optimize_all(X_test)
@@ -690,7 +690,7 @@ print(f'Speedup: {results[\"quantization\"][\"expected_inference_speedup\"]}x')
 ```bash
 # Test data quality framework
 python -c "
-from src.data.quality_framework import validate_taxi_dataset
+from data.quality_framework import validate_taxi_dataset
 
 results = validate_taxi_dataset(
     df=test_data,
@@ -705,7 +705,7 @@ print(f'Failed checks: {results[\"failed_checks\"]}')
 ```bash
 # Generate and save API documentation
 python -c "
-from src.deployment.enhanced_api_docs import APIDocumentationGenerator
+from deployment.enhanced_api_docs import APIDocumentationGenerator
 
 docs = APIDocumentationGenerator.generate_complete_documentation()
 APIDocumentationGenerator.save_documentation()
@@ -895,7 +895,7 @@ python setup.py develop
 ls data/raw/
 
 # If missing, download data:
-python -m src.data.ingest
+python -m data.ingest
 
 # Or check .gitignore for excluded files
 cat .gitignore | grep data

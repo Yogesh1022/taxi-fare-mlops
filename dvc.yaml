@@ -1,6 +1,16 @@
 stages:
+  preprocess:
+    cmd: python -m data.preprocessing
+    deps:
+    - data/raw/train.csv
+    - data/raw/test.csv
+    - src/data/preprocessing.py
+    outs:
+    - data/processed/preprocessed_train.csv
+    - data/processed/preprocessed_test.csv
+
   clean:
-    cmd: python -m src.data.clean
+    cmd: python -m data.clean
     deps:
     - data/raw/train.csv
     - data/raw/test.csv
@@ -10,7 +20,7 @@ stages:
     - data/clean/test_clean.csv
 
   ingest:
-    cmd: python -m src.data.ingest
+    cmd: python -m data.ingest
     deps:
     - data/clean/train_clean.csv
     - data/clean/test_clean.csv
@@ -19,7 +29,7 @@ stages:
     - data/processed/ingested_test.csv
 
   validate:
-    cmd: python src/data/validate_run.py
+    cmd: python -m data.validate_run
     deps:
     - data/raw/train.csv
     - data/raw/test.csv
@@ -39,7 +49,7 @@ stages:
         cache: false
 
   baseline:
-    cmd: python -m src.models.baseline
+    cmd: python -m models.baseline
     deps:
     - data/processed/ingested_train.csv
     - src/models/baseline.py
@@ -70,4 +80,13 @@ stages:
     - models/tuning_results.json:
         cache: false
     - models/tuning_comparison.json:
+        cache: false
+
+  evaluate:
+    cmd: python -m models.evaluate
+    deps:
+    - models/best_baseline_model.pkl
+    - src/models/evaluate.py
+    metrics:
+    - models/evaluation.json:
         cache: false

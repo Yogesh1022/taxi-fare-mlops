@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from src.deployment.model_registry import ModelRegistry, setup_production_models
+from deployment.model_registry import ModelRegistry, setup_production_models
 
 
 class TestModelRegistry:
@@ -32,7 +32,7 @@ class TestModelRegistry:
         )
         assert result == {}
 
-    @patch("src.deployment.model_registry.mlflow")
+    @patch("deployment.model_registry.mlflow")
     def test_register_model_with_mlflow(self, mock_mlflow):
         """Test model registration with MLflow."""
         registry = ModelRegistry(use_mlflow=True)
@@ -60,7 +60,7 @@ class TestModelRegistry:
         result = registry.set_model_alias("test-model", "production", 1)
         assert result == {}
 
-    @patch("src.deployment.model_registry.mlflow.tracking.MlflowClient")
+    @patch("deployment.model_registry.mlflow.tracking.MlflowClient")
     def test_set_model_alias_with_mlflow(self, mock_client_class):
         """Test alias setting with MLflow."""
         registry = ModelRegistry(use_mlflow=True)
@@ -76,7 +76,7 @@ class TestModelRegistry:
             "taxi-fare-xgboost", "production", 1
         )
 
-    @patch("src.deployment.model_registry.mlflow.tracking.MlflowClient")
+    @patch("deployment.model_registry.mlflow.tracking.MlflowClient")
     def test_transition_stage_valid(self, mock_client_class):
         """Test stage transition with valid stage."""
         registry = ModelRegistry(use_mlflow=True)
@@ -97,7 +97,7 @@ class TestModelRegistry:
         with pytest.raises(ValueError):
             registry.transition_stage("test-model", 1, "InvalidStage")
 
-    @patch("src.deployment.model_registry.mlflow.tracking.MlflowClient")
+    @patch("deployment.model_registry.mlflow.tracking.MlflowClient")
     def test_update_model_description(self, mock_client_class):
         """Test updating model description."""
         registry = ModelRegistry(use_mlflow=True)
@@ -112,7 +112,7 @@ class TestModelRegistry:
         assert result["description"] == "Updated XGBoost model for production"
         mock_client.update_registered_model.assert_called_once()
 
-    @patch("src.deployment.model_registry.mlflow.tracking.MlflowClient")
+    @patch("deployment.model_registry.mlflow.tracking.MlflowClient")
     def test_get_model_info(self, mock_client_class):
         """Test retrieving model information."""
         registry = ModelRegistry(use_mlflow=True)
@@ -142,7 +142,7 @@ class TestModelRegistry:
         assert len(result["latest_versions"]) == 1
         assert result["latest_versions"][0]["version"] == 1
 
-    @patch("src.deployment.model_registry.mlflow.tracking.MlflowClient")
+    @patch("deployment.model_registry.mlflow.tracking.MlflowClient")
     def test_list_registered_models(self, mock_client_class):
         """Test listing registered models."""
         registry = ModelRegistry(use_mlflow=True)
@@ -168,7 +168,7 @@ class TestModelRegistry:
         assert "taxi-fare-lightgbm" in result
         assert "taxi-fare-svm" in result
 
-    @patch("src.deployment.model_registry.mlflow.tracking.MlflowClient")
+    @patch("deployment.model_registry.mlflow.tracking.MlflowClient")
     def test_get_production_model(self, mock_client_class):
         """Test retrieving production model."""
         registry = ModelRegistry(use_mlflow=True)
@@ -267,7 +267,7 @@ class TestSetupProductionModels:
                 json.dump(tuning_results, f)
 
             # Patch MODEL_DIR for testing
-            with patch("src.deployment.model_registry.MODEL_DIR", tmpdir):
+            with patch("deployment.model_registry.MODEL_DIR", tmpdir):
                 result = setup_production_models(tuning_results_path=results_path, use_mlflow=False)
 
             # Should not error even without MLflow

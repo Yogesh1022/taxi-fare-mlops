@@ -3,8 +3,8 @@
 import pandas as pd
 import pytest
 
-from src.data.schema import DataSchema
-from src.data.validate import DataValidator
+from data.schema import DataSchema
+from data.validate import DataValidator
 
 
 @pytest.fixture
