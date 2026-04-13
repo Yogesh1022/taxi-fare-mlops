@@ -190,7 +190,7 @@ jobs:
 
     - name: Create workflow status comment
       if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7.0.1.0.1
+      uses: actions/github-script@v7.0.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
