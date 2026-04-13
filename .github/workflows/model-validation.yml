@@ -32,21 +32,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install "pytest>=9.0.3" pytest-asyncio
-        pip install -r requirements.txt
-        pip install -e . --no-build-isolation --force-reinstall
+        pip install -e .
+        pip install .[dev]
 
     - name: Run model validation tests
       run: |
-        python -m pytest tests/unit/test_models.py -v --tb=short
-      env:
-        PYTHONPATH: ${{ github.workspace }}
+        pytest tests/unit/test_models.py -v --tb=short
 
     - name: Verify model registry integrity
       run: |
-        python -m pytest tests/unit/test_model_registry.py -v --tb=short
-      env:
-        PYTHONPATH: ${{ github.workspace }}
+        pytest tests/unit/test_model_registry.py -v --tb=short
 
     - name: Check model artifacts exist
       run: |
@@ -81,15 +76,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install "pytest>=9.0.3" pytest-asyncio
-        pip install -r requirements.txt
-        pip install -e . --no-build-isolation --force-reinstall
+        pip install -e .
+        pip install .[dev]
 
     - name: Run batch prediction tests
       run: |
-        python -m pytest tests/unit/test_batch_predictions.py -v --tb=short
-      env:
-        PYTHONPATH: ${{ github.workspace }}
+        pytest tests/unit/test_batch_predictions.py -v --tb=short
 
     - name: Check predictions output
       run: |
@@ -116,15 +108,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install "pytest>=9.0.3" pytest-asyncio
-        pip install -r requirements.txt
-        pip install -e . --no-build-isolation --force-reinstall
+        pip install -e .
+        pip install .[dev]
 
     - name: Run API endpoint tests
       run: |
-        python -m pytest tests/unit/test_inference_api.py -v --tb=short
-      env:
-        PYTHONPATH: ${{ github.workspace }}
+        pytest tests/unit/test_inference_api.py -v --tb=short
 
     - name: Verify API response models
       run: |
@@ -151,9 +140,9 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install "pytest>=9.0.3" pytest-asyncio
+        python -m pip install --upgrade pip setuptools wheel
+        pip install -e .
+        pip install .[dev]
 
     - name: Run model performance tests
       run: |

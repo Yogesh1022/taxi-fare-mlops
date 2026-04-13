@@ -31,16 +31,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install "pytest>=9.0.3" pytest-cov pytest-asyncio
-        pip install -r requirements.txt
-        pip install -e . --no-build-isolation --force-reinstall
+        pip install -e .
+        pip install .[dev]
 
     - name: Verify all tests pass
       run: |
-        python -m pytest tests/unit/ tests/integration/ tests/contract/ -q --tb=line
+        pytest tests/unit/ tests/integration/ tests/contract/ -q --tb=line
         echo "Tests passed"
-      env:
-        PYTHONPATH: ${{ github.workspace }}
 
     - name: Check Python version compatibility
       run: |
@@ -186,15 +183,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install "pytest>=9.0.3" pytest-cov
-        pip install -r requirements.txt
-        pip install -e . --no-build-isolation --force-reinstall
+        pip install -e .
+        pip install .[dev]
 
     - name: Generate coverage report
       run: |
-        python -m pytest tests/ --cov=src --cov-report=term-missing:skip-covered --cov-report=json
-      env:
-        PYTHONPATH: ${{ github.workspace }}
+        pytest tests/ --cov=models --cov=data --cov=features --cov=deployment --cov=utils --cov-report=term-missing:skip-covered --cov-report=json
 
     - name: Check coverage threshold
       run: |
