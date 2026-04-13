@@ -34,9 +34,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         pip install pytest pytest-asyncio
         pip install -r requirements.txt
-        pip install -e .
-
-    - name: Run model validation tests
+        pip install -e . --no-build-isolation
       run: |
         python -m pytest tests/unit/test_models.py -v --tb=short
       env:
@@ -84,7 +82,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         pip install pytest pytest-asyncio
         pip install -r requirements.txt
-        pip install -e .
+        pip install -e . --no-build-isolation
 
     - name: Run batch prediction tests
       run: |
@@ -120,7 +118,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         pip install pytest pytest-asyncio
         pip install -r requirements.txt
-        pip install -e .
+        pip install -e . --no-build-isolation
 
     - name: Run API endpoint tests
       run: |

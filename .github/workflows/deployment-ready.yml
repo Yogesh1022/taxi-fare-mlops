@@ -33,7 +33,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         pip install pytest pytest-cov pytest-asyncio
         pip install -r requirements.txt
-        pip install -e .
+        pip install -e . --no-build-isolation
 
     - name: Verify all tests pass
       run: |
@@ -189,7 +189,7 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         pip install pytest pytest-cov
         pip install -r requirements.txt
-        pip install -e .
+        pip install -e . --no-build-isolation
 
     - name: Generate coverage report
       run: |
