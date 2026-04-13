@@ -408,11 +408,11 @@ class DriftDetector:
         drift_severity = (
             "SEVERE"
             if results["drift_consensus"] >= 3
-            else "MODERATE"
-            if results["drift_consensus"] == 2
-            else "MILD"
-            if results["drift_consensus"] == 1
-            else "NONE"
+            else (
+                "MODERATE"
+                if results["drift_consensus"] == 2
+                else "MILD" if results["drift_consensus"] == 1 else "NONE"
+            )
         )
         results["drift_severity"] = drift_severity
 

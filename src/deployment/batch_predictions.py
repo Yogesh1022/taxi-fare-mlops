@@ -188,9 +188,9 @@ class BatchPredictor:
             "timestamp": datetime.now().isoformat(),
             "model_name": self.model_name,
             "n_predictions": len(predictions),
-            "predictions": predictions.tolist()
-            if isinstance(predictions, np.ndarray)
-            else predictions,
+            "predictions": (
+                predictions.tolist() if isinstance(predictions, np.ndarray) else predictions
+            ),
             "metrics": self.metrics,
         }
 
