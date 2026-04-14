@@ -51,7 +51,7 @@ jobs:
     - name: Verify src package structure
       working-directory: ${{ github.workspace }}
       run: |
-        python scripts/verify_src_layout.py --check-imports
+        PYTHONPATH=src python scripts/verify_src_layout.py --check-imports
 
     - name: Run unit tests with coverage
       working-directory: ${{ github.workspace }}

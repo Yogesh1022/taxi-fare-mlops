@@ -8,6 +8,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import importlib
 import pathlib
 import sys
 from typing import Iterable
@@ -30,10 +31,11 @@ def find_missing_init_files(src_root: pathlib.Path) -> list[pathlib.Path]:
 
 
 def verify_imports(src_root: pathlib.Path, modules: Iterable[str]) -> None:
-    """Import top-level modules expected to be available from src layout."""
+    """Import modules through the taxi_fare namespace package."""
     sys.path.insert(0, str(src_root.resolve()))
+    importlib.import_module("taxi_fare")
     for module in modules:
-        __import__(module)
+        importlib.import_module(f"taxi_fare.{module}")
 
 
 def main() -> int:
