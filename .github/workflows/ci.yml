@@ -36,11 +36,19 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Configure PYTHONPATH for src layout
+      run: |
+        echo "PYTHONPATH=${GITHUB_WORKSPACE}/src" >> "$GITHUB_ENV"
+
+    - name: Verify src package structure
+      run: |
+        python scripts/verify_src_layout.py --check-imports
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install -e .
-        pip install .[dev]
+        pip install -r requirements.txt
+        pip install -e ".[dev]"
 
     - name: Run unit tests with coverage
       run: |
@@ -77,11 +85,15 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
+    - name: Configure PYTHONPATH for src layout
+      run: |
+        echo "PYTHONPATH=${GITHUB_WORKSPACE}/src" >> "$GITHUB_ENV"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install -e .
-        pip install .[dev]
+        pip install -r requirements.txt
+        pip install -e ".[dev]"
 
     - name: Format check with black
       run: |
@@ -115,11 +127,15 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
+    - name: Configure PYTHONPATH for src layout
+      run: |
+        echo "PYTHONPATH=${GITHUB_WORKSPACE}/src" >> "$GITHUB_ENV"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install -e .
-        pip install .[dev]
+        pip install -r requirements.txt
+        pip install -e ".[dev]"
 
     - name: Run contract tests
       run: pytest tests/contract/ -v --tb=short
@@ -141,11 +157,15 @@ jobs:
       with:
         python-version: "3.10"
 
+    - name: Configure PYTHONPATH for src layout
+      run: |
+        echo "PYTHONPATH=${GITHUB_WORKSPACE}/src" >> "$GITHUB_ENV"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install -e .
-        pip install .[dev]
+        pip install -r requirements.txt
+        pip install -e ".[dev]"
 
     - name: Run bandit security check
       run: |
